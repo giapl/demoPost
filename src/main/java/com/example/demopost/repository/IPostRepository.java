@@ -16,6 +16,6 @@ public interface IPostRepository extends JpaRepository<PostTopic, Long> {
   List<PostTopic> findByTitleContainingIgnoreCase(@Param("title") String title);
   @Query(value = "select * from topic order by  id desc ",nativeQuery = true)
   List<PostTopic> findAllBYIdOrderBy();
-  @Query(value = "select *from topic order by like_count desc",nativeQuery = true)
+  @Query(value = "select *from topic order by like_count,share desc",nativeQuery = true)
   List<PostTopic> findAllByLikeOrderBy();
 }
