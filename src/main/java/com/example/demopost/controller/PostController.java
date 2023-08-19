@@ -2,7 +2,7 @@ package com.example.demopost.controller;
 
 import com.example.demopost.data.enity.PostTopic;
 import com.example.demopost.data.request.PostRequest;
-import com.example.demopost.service.IPostService;
+import com.example.demopost.service.post.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,9 +25,7 @@ public class PostController {
 
   @PostMapping("/topic")
   public ResponseEntity<PostTopic> create_Topic(@RequestBody PostRequest post) {
-
     return ResponseEntity.ok(iPostService.create_Topic(post));
-
   }
 
   @GetMapping("/all")

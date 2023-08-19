@@ -12,8 +12,10 @@ public interface IPostRepository extends JpaRepository<PostTopic, Long> {
 
   @Query(value = "select *from topic ",nativeQuery = true)
   List<PostTopic> findAll();
-  @Query(value = "select * from topic where title = :title",nativeQuery = true)
-  List<PostTopic> searchByTitle(@Param("title") String title);
   @Query(value = "SELECT * from topic pt WHERE LOWER(pt.title) LIKE LOWER(concat('%', :title, '%'))", nativeQuery = true)
   List<PostTopic> findByTitleContainingIgnoreCase(@Param("title") String title);
+  @Query(value = "select * from topic order by  id desc ",nativeQuery = true)
+  List<PostTopic> findAllBYIdOrderBy();
+  @Query(value = "select *from topic order by like_count desc",nativeQuery = true)
+  List<PostTopic> findAllByLikeOrderBy();
 }
