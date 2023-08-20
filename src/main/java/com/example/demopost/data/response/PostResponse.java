@@ -1,4 +1,4 @@
-package com.example.demopost.data.reponse;
+package com.example.demopost.data.response;
 
 
 

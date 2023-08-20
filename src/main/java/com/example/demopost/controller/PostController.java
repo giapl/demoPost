@@ -29,8 +29,8 @@ public class PostController {
   }
 
   @GetMapping("/all")
-  public ResponseEntity<?> findAll() {
-    return ResponseEntity.ok(iPostService.findAll());
+  public ResponseEntity<?> findAll_Topic() {
+    return ResponseEntity.ok(iPostService.findAll_Topic());
   }
 
   @GetMapping("/search")

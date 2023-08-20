@@ -1,5 +1,6 @@
 package com.example.demopost.controller;
 
+import com.example.demopost.service.Question.IQuestionService;
 import com.example.demopost.service.home.IHomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeController {
 
   private IHomeService iHomeService;
+  private IQuestionService iQuestionService;
   @Autowired
-  public HomeController(IHomeService iHomeService) {
+  public HomeController(IHomeService iHomeService, IQuestionService iQuestionService) {
     this.iHomeService = iHomeService;
+    this.iQuestionService = iQuestionService;
   }
 
   @GetMapping("/NoiBat")
@@ -27,7 +30,7 @@ public class HomeController {
   }
   @GetMapping("/CauHoi")
   public ResponseEntity<?> get_CauHoi(){
-    return ResponseEntity.ok(iHomeService.get_CauHoi());
+    return ResponseEntity.ok(iQuestionService.finAll_Question());
   }
   @GetMapping("/ChoBan")
   public ResponseEntity<?> get_ChoBan() {

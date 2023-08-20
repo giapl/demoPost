@@ -33,7 +33,7 @@ public class IPostServiceImpl implements IPostService {
   }
 
   @Override
-  public List<PostTopic> findAll() {
+  public List<PostTopic> findAll_Topic() {
     return iPostRepository.findAll();
   }
 
