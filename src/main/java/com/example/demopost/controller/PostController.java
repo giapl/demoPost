@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/home")
+@RequestMapping("/home/ChoBan")
 public class PostController {
 
   private IPostService iPostService;

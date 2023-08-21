@@ -3,7 +3,6 @@ package com.example.demopost.service.post;
 import com.example.demopost.data.enity.PostTopic;
 import com.example.demopost.data.request.PostRequest;
 import com.example.demopost.repository.IPostRepository;
-import com.example.demopost.service.post.IPostService;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.jetbrains.annotations.NotNull;

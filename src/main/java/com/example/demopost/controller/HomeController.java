@@ -1,6 +1,6 @@
 package com.example.demopost.controller;
 
-import com.example.demopost.service.Question.IQuestionService;
+
 import com.example.demopost.service.home.IHomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,25 +13,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeController {
 
   private IHomeService iHomeService;
-  private IQuestionService iQuestionService;
+
   @Autowired
-  public HomeController(IHomeService iHomeService, IQuestionService iQuestionService) {
+  public HomeController(IHomeService iHomeService) {
     this.iHomeService = iHomeService;
-    this.iQuestionService = iQuestionService;
   }
 
   @GetMapping("/NoiBat")
-  public ResponseEntity<?> get_NoiBat() {
-    return ResponseEntity.ok(iHomeService.get_NoiBat());
+  public ResponseEntity<?> setOutstanding() {
+    return ResponseEntity.ok(iHomeService.setOutstanding());
   }
+
   @GetMapping("News")
-  public ResponseEntity<?> get_News(){
-    return ResponseEntity.ok(iHomeService.get_News());
+  public ResponseEntity<?> setNews() {
+    return ResponseEntity.ok(iHomeService.setNews());
   }
+
   @GetMapping("/CauHoi")
-  public ResponseEntity<?> get_CauHoi(){
-    return ResponseEntity.ok(iQuestionService.finAll_Question());
+  public ResponseEntity<?> setQuestions() {
+    return ResponseEntity.ok(iHomeService.setQuestions());
   }
+
   @GetMapping("/ChoBan")
   public ResponseEntity<?> get_ChoBan() {
     return ResponseEntity.ok(iHomeService.get_ChoBan());

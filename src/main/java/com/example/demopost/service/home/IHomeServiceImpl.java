@@ -26,17 +26,17 @@ public class IHomeServiceImpl implements IHomeService {
   }
 
   @Override
-  public List<PostTopic> get_NoiBat() {
+  public List<PostTopic> setOutstanding() {
     return iPostRepository.findAllByLikeOrderBy();
   }
 
   @Override
-  public List<PostTopic> get_News() {
+  public List<PostTopic> setNews() {
     return iPostRepository.findAllBYIdOrderBy();
   }
 
   @Override
-  public List<Question> get_CauHoi() {
+  public List<Question> setQuestions() {
     return iQuestionRepository.findAll();
   }
 }

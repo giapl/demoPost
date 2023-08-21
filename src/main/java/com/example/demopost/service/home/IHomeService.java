@@ -7,8 +7,11 @@ import java.util.List;
 public interface IHomeService {
 
   List<PostTopic> get_ChoBan();
-  List<PostTopic> get_NoiBat();
-  List<PostTopic> get_News();
-  List<Question> get_CauHoi();
+
+  List<PostTopic> setOutstanding();
+
+  List<PostTopic> setNews();
+
+  List<Question> setQuestions();
 
 }
