@@ -36,6 +36,6 @@ public class HomeController {
 
   @GetMapping("/ChoBan")
   public ResponseEntity<?> get_ChoBan() {
-    return ResponseEntity.ok(iHomeService.get_ChoBan());
+    return ResponseEntity.ok(iHomeService.getChoBan());
   }
 }

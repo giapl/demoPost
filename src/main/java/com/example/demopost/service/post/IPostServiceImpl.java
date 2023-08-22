@@ -2,6 +2,8 @@ package com.example.demopost.service.post;
 
 import com.example.demopost.data.enity.PostTopic;
 import com.example.demopost.data.request.PostRequest;
+import com.example.demopost.exception.InternalServerException;
+import com.example.demopost.exception.NotFoundException;
 import com.example.demopost.repository.IPostRepository;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,20 +21,25 @@ public class IPostServiceImpl implements IPostService {
     this.iPostRepository = iPostRepository;
   }
 
+
   @Override
-  public PostTopic create_Topic(@NotNull PostRequest post) {
-    PostTopic topic =new PostTopic();
-    topic.setTitle(post.getTitle());
-    topic.setContent(post.getContent());
-    topic.setImageUrl(post.getImageUrl());
-    topic.setDateTime(LocalDateTime.now());
-    topic.setLike(0);
-    topic.setShare(0);
-    return iPostRepository.save(topic);
+  public PostTopic createTopic(@NotNull PostRequest post) {
+      PostTopic topic = new PostTopic();
+      topic.setTitle(post.getTitle());
+      topic.setContent(post.getContent());
+      topic.setImageUrl(post.getImageUrl());
+      topic.setDateTime(LocalDateTime.now());
+      topic.setLike(0);
+      topic.setShare(0);
+      try {
+        return iPostRepository.save(topic);
+      } catch (Exception e) {
+           throw new InternalServerException("sorry save database");
+      }
   }
 
   @Override
-  public List<PostTopic> findAll_Topic() {
+  public List<PostTopic> findAllTopic() {
     return iPostRepository.findAll();
   }
 

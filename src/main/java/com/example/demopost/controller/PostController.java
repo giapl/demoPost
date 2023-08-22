@@ -24,13 +24,13 @@ public class PostController {
   }
 
   @PostMapping("/topic")
-  public ResponseEntity<PostTopic> create_Topic(@RequestBody PostRequest post) {
-    return ResponseEntity.ok(iPostService.create_Topic(post));
+  public ResponseEntity<PostTopic> createTopic(@RequestBody PostRequest post) {
+    return ResponseEntity.ok(iPostService.createTopic(post));
   }
 
   @GetMapping("/all")
-  public ResponseEntity<?> findAll_Topic() {
-    return ResponseEntity.ok(iPostService.findAll_Topic());
+  public ResponseEntity<?> findAllTopic() {
+    return ResponseEntity.ok(iPostService.findAllTopic());
   }
 
   @GetMapping("/search")

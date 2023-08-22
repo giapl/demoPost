@@ -1,5 +1,7 @@
 package com.example.demopost.controller;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 import com.example.demopost.data.request.QuestionRequest;
 import com.example.demopost.service.Question.IQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,11 +24,15 @@ public class QuestionContronller {
     this.iQuestionService = iQuestionService;
   }
   @PostMapping("/question")
-  public ResponseEntity<?> create_Question(@RequestBody QuestionRequest question) {
-    return ResponseEntity.ok(iQuestionService.create_Question(question));
+  public ResponseEntity<?> createQuestion(@RequestBody QuestionRequest question) {
+    return ResponseEntity.ok(iQuestionService.createQuestion(question));
   }
   @GetMapping("/all")
-  public ResponseEntity<?> finAll_Question() {
-    return ResponseEntity.ok(iQuestionService.finAll_Question());
+  public ResponseEntity<?> finAllQuestion() {
+    return ResponseEntity.ok(iQuestionService.finAllQuestion());
+  }
+  @GetMapping("/id")
+  public ResponseEntity<?> searchId(@RequestParam long id) {
+    return ResponseEntity.ok(iQuestionService.searchId(id));
   }
 }

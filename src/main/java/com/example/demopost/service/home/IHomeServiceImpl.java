@@ -21,7 +21,7 @@ public class IHomeServiceImpl implements IHomeService {
   }
 
   @Override
-  public List<PostTopic> get_ChoBan() {
+  public List<PostTopic> getChoBan() {
     return iPostRepository.findAll();
   }
 
