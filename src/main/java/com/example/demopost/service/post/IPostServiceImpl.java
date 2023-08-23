@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,8 +33,8 @@ public class IPostServiceImpl implements IPostService {
       topic.setShare(0);
       try {
         return iPostRepository.save(topic);
-      } catch (Exception e) {
-           throw new InternalServerException("sorry save database");
+      } catch (DataAccessException e) {
+        throw new InternalServerException("sorry save database");
       }
   }
 
