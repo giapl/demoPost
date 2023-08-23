@@ -2,6 +2,7 @@ package com.example.demopost.service.Question;
 
 import com.example.demopost.data.enity.Question;
 import com.example.demopost.data.request.QuestionRequest;
+import com.example.demopost.exception.InternalServerException;
 import com.example.demopost.exception.NotFoundException;
 import com.example.demopost.repository.IQuestionRepository;
 import java.time.LocalDateTime;
@@ -22,12 +23,16 @@ public class IQuestionServiceImpl implements IQuestionService {
 
   @Override
   public Question createQuestion(QuestionRequest question) {
-    Question question1 = new Question();
-    question1.setDate(LocalDateTime.now());
-    question1.setContent(question.getContent());
-    question1.setImageUrl(question.getImgUrl());
-    question1.setComment(question1.getComment());
-    return iQuestionRepository.save(question1);
+      Question question1 = new Question();
+      question1.setDate(LocalDateTime.now());
+      question1.setContent(question.getContent());
+      question1.setImageUrl(question.getImgUrl());
+      question1.setComment(question1.getComment());
+      try {
+        return iQuestionRepository.save(question1);
+      } catch (Exception e) {
+           throw new InternalServerException("sorry save database");
+      }
   }
 
   @Override

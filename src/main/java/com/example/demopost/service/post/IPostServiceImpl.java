@@ -3,7 +3,6 @@ package com.example.demopost.service.post;
 import com.example.demopost.data.enity.PostTopic;
 import com.example.demopost.data.request.PostRequest;
 import com.example.demopost.exception.InternalServerException;
-import com.example.demopost.exception.NotFoundException;
 import com.example.demopost.repository.IPostRepository;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -45,7 +44,6 @@ public class IPostServiceImpl implements IPostService {
 
   @Override
   public List<PostTopic> searchByTitle(String title) {
-    return iPostRepository.findByTitleContainingIgnoreCase(title);
+      return iPostRepository.findByTitleContainingIgnoreCase(title);
   }
-
 }

@@ -1,5 +1,6 @@
 package com.example.demopost.exception;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,5 +12,5 @@ public class ErrorResponse {
 
   private HttpStatus status;
   private String message;
-
+  private LocalDateTime dateTime;
 }
