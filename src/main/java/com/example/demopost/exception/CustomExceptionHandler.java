@@ -11,19 +11,22 @@ import org.springframework.web.context.request.WebRequest;
 @RestControllerAdvice
 public class CustomExceptionHandler {
 
-  @ExceptionHandler(NotFoundException.class)
-  @ResponseStatus(HttpStatus.NOT_FOUND)
-  public ErrorResponse handlerNotFoundException( NotFoundException ex, WebRequest req) {
-    return new ErrorResponse(HttpStatus.NOT_FOUND,ex.getMessage(), LocalDateTime.now());
-  }
-  @ExceptionHandler(InternalServerException.class)
-  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  public ErrorResponse handlerInternalServer( InternalServerException ex,WebRequest req) {
-    return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(),LocalDateTime.now());
-  }
   @ExceptionHandler(BadRequestException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ErrorResponse handlerBardRequest(BadRequestException ex , WebRequest req) {
-    return new ErrorResponse(HttpStatus.BAD_REQUEST , ex.getMessage() , LocalDateTime.now());
+  public ErrorResponse handlerBardRequest(BadRequestException ex, WebRequest req) {
+    return new ErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), LocalDateTime.now());
+  }
+
+  @ExceptionHandler(NotFoundException.class)
+  @ResponseStatus(HttpStatus.NOT_FOUND)
+  public ErrorResponse handlerNotFoundException(NotFoundException ex, WebRequest req) {
+    return new ErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage(), LocalDateTime.now());
+  }
+
+  @ExceptionHandler(InternalServerException.class)
+  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  public ErrorResponse handlerInternalServer(InternalServerException ex, WebRequest req) {
+    return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(),
+        LocalDateTime.now());
   }
 }

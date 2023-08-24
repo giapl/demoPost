@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,7 +31,7 @@ public class IQuestionServiceImpl implements IQuestionService {
       question1.setComment(question1.getComment());
       try {
         return iQuestionRepository.save(question1);
-      } catch (Exception e) {
+      } catch (DataAccessException e) {
            throw new InternalServerException("sorry save database");
       }
   }
