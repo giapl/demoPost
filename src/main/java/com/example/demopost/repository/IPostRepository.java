@@ -10,12 +10,19 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IPostRepository extends JpaRepository<PostTopic, Long> {
 
-  @Query(value = "select *from topic ",nativeQuery = true)
+  // jpa hien thi toan bo post
+  @Query(value = "select *from topic ", nativeQuery = true)
   List<PostTopic> findAll();
+
+  //jpa search title cho bai post
   @Query(value = "SELECT * from topic pt WHERE LOWER(pt.title) LIKE LOWER(concat('%', :title, '%'))", nativeQuery = true)
   List<PostTopic> findByTitleContainingIgnoreCase(@Param("title") String title);
-  @Query(value = "select * from topic order by  id desc ",nativeQuery = true)
+
+  // jpa hien thi bai moi post len
+  @Query(value = "select * from topic order by  id desc ", nativeQuery = true)
   List<PostTopic> findAllBYIdOrderBy();
-  @Query(value = "select *from topic order by like_count desc ",nativeQuery = true)
+
+  // jpa hien thi cac bai post co so like lon len dau tien
+  @Query(value = "select *from topic order by like_count desc ", nativeQuery = true)
   List<PostTopic> findAllByLikeOrderBy();
 }

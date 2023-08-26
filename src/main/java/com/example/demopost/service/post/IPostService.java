@@ -7,8 +7,8 @@ import java.util.List;
 
 
 public interface IPostService {
-  PostTopic createTopic(PostRequest post);
-  List<PostTopic> findAllTopic();
-  List<PostTopic> searchByTitle(String title);
+  PostTopic createTopic(PostRequest post); // method them post
+  List<PostTopic> findAllTopic(); // method hien thi all bai post
+  List<PostTopic> searchByTitle(String title); // method search theo title bai pos
 
 }

@@ -8,9 +8,10 @@ import java.util.Optional;
 
 public interface IQuestionService {
 
-  Question createQuestion(QuestionRequest question);
-  List<Question> finAllQuestion();
+  Question createQuestion(QuestionRequest question); // method them cau hoi
 
-  Optional<Question> searchId(long id);
+  List<Question> finAllQuestion(); // method hien thi all cau hoi
+
+  Optional<Question> searchId(long id); // method search cau hoi theo id
 
 }

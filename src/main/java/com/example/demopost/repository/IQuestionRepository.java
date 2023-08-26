@@ -7,10 +7,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface IQuestionRepository extends JpaRepository<Question , Long> {
-  @Query(value = "select * from question ",nativeQuery = true)
-   List<Question> findAll();
-  @Query(value = "select * from question where id = :id",nativeQuery = true)
+public interface IQuestionRepository extends JpaRepository<Question, Long> {
+
+  // jpa hien thi toan bo question
+  @Query(value = "select * from question ", nativeQuery = true)
+  List<Question> findAll();
+
+  // jpa search question theo id
+  @Query(value = "select * from question where id = :id", nativeQuery = true)
   Optional<Question> searchById(@Param("id") long id);
 
 }

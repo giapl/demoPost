@@ -6,12 +6,12 @@ import java.util.List;
 
 public interface IHomeService {
 
-  List<PostTopic> getChoBan();
+  List<PostTopic> getChoBan(); // method hien thi toan bo bai post
 
-  List<PostTopic> setOutstanding();
+  List<PostTopic> setOutstanding(); // method lay cac bai post noi bat theo so like
 
-  List<PostTopic> setNews();
+  List<PostTopic> setNews(); // method lay cac bai viet moi dang len dau tien
 
-  List<Question> setQuestions();
+  List<Question> setQuestions(); // method hien thi toan bo cau hoi
 
 }
