@@ -21,8 +21,4 @@ public interface IPostRepository extends JpaRepository<PostTopic, Long> {
   // jpa hien thi bai moi post len
   @Query(value = "select * from topic order by  id desc ", nativeQuery = true)
   List<PostTopic> findAllBYIdOrderBy();
-
-  // jpa hien thi cac bai post co so like lon len dau tien
-  @Query(value = "select *from topic order by like_count desc ", nativeQuery = true)
-  List<PostTopic> findAllByLikeOrderBy();
 }

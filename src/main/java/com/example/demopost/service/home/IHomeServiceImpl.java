@@ -27,7 +27,7 @@ public class IHomeServiceImpl implements IHomeService {
 
   @Override
   public List<PostTopic> setOutstanding() {
-    return iPostRepository.findAllByLikeOrderBy();
+    return null;
   }
 
   @Override
