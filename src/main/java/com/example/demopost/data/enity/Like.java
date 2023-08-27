@@ -22,7 +22,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "like1")
+@Table(name = "like_post")
 public class Like {
 
   @Id
