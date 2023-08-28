@@ -14,8 +14,10 @@ public class IHomeServiceImpl implements IHomeService {
   private IPostRepository iPostRepository;
   private IQuestionRepository iQuestionRepository;
 
+
   @Autowired
-  public IHomeServiceImpl(IPostRepository iPostRepository, IQuestionRepository iQuestionRepository) {
+  public IHomeServiceImpl(IPostRepository iPostRepository,
+      IQuestionRepository iQuestionRepository) {
     this.iPostRepository = iPostRepository;
     this.iQuestionRepository = iQuestionRepository;
   }

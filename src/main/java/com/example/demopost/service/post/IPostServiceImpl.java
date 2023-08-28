@@ -3,8 +3,10 @@ package com.example.demopost.service.post;
 import com.example.demopost.data.enity.Like;
 import com.example.demopost.data.enity.PostTopic;
 import com.example.demopost.data.request.PostRequest;
+import com.example.demopost.data.response.PostResponse;
 import com.example.demopost.exception.InternalServerException;
 import com.example.demopost.repository.IPostRepository;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,23 +24,30 @@ public class IPostServiceImpl implements IPostService {
     this.iPostRepository = iPostRepository;
   }
 
-
   @Override
-  public PostTopic createTopic(PostRequest post) {
+  public PostResponse createTopic(PostRequest post) {
     PostTopic topic = new PostTopic();
+    topic.setDateTime(LocalDateTime.now());
     topic.setTitle(post.getTitle());
     topic.setContent(post.getContent());
     topic.setImageUrl(post.getImageUrl());
-    topic.setDateTime(LocalDateTime.now());
-    // tao like tuong ung
+    // like tuong ung
     Like like1 = new Like();
-    like1.setLike(0); // set like = 0
-    like1.setPostTopic(topic); // lien ket voi postTopic
-    List<Like> likes = new ArrayList<>();
-    likes.add(like1);
-    topic.setLikes(likes);
+    like1.setLike(0);
+    like1.setPostTopic(topic);
+    List<Like> like = new ArrayList<>();
+    like.add(like1);
+    topic.setLikes(like);
     try {
-      return iPostRepository.save(topic);
+      topic = iPostRepository.save(topic);
+      // response
+      PostResponse response = new PostResponse();
+      response.setDateTime(LocalDateTime.now());
+      response.setTitle(topic.getTitle());
+      response.setContent(topic.getContent());
+      response.setImgUrl(topic.getImageUrl());
+      response.setLike(topic.getLikes().get(0).getLike());
+      return response;
     } catch (DataAccessException e) {
       throw new InternalServerException("sorry save database");
     }

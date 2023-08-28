@@ -3,6 +3,7 @@ package com.example.demopost.controller;
 import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 import com.example.demopost.data.request.QuestionRequest;
+import com.example.demopost.data.response.QuestionResponse;
 import com.example.demopost.service.Question.IQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class QuestionContronller {
     this.iQuestionService = iQuestionService;
   }
   @PostMapping("/question")
-  public ResponseEntity<?> createQuestion(@RequestBody QuestionRequest question) {
+  public ResponseEntity<QuestionResponse> createQuestion(@RequestBody QuestionRequest question) {
     return ResponseEntity.ok(iQuestionService.createQuestion(question));
   }
   @GetMapping("/all")

@@ -3,12 +3,13 @@ package com.example.demopost.service.Question;
 
 import com.example.demopost.data.enity.Question;
 import com.example.demopost.data.request.QuestionRequest;
+import com.example.demopost.data.response.QuestionResponse;
 import java.util.List;
 import java.util.Optional;
 
 public interface IQuestionService {
 
-  Question createQuestion(QuestionRequest question); // method them cau hoi
+  QuestionResponse createQuestion(QuestionRequest question); // method them cau hoi
 
   List<Question> finAllQuestion(); // method hien thi all cau hoi
 
