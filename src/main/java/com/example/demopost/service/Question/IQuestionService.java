@@ -15,4 +15,6 @@ public interface IQuestionService {
 
   Optional<Question> searchId(long id); // method search cau hoi theo id
 
+  void deleteById(Long id); // method delete question theo id
+
 }

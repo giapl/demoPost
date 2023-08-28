@@ -60,4 +60,13 @@ public class IQuestionServiceImpl implements IQuestionService {
       throw new NotFoundException("no id database");
     }
   }
+
+  @Override
+  public void deleteById(Long id) {
+    if (iQuestionRepository.existsById(id)) {
+      iQuestionRepository.deleteById(id);
+    } else {
+      throw new NotFoundException("no id or id question on delete successful");
+    }
+  }
 }

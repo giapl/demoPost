@@ -17,4 +17,5 @@ public interface IPostService {
 
   Optional<PostTopic> searchById(Long id); // method search theo id bai post
 
+  void deleteById(Long id); // method delete postTopic theo id
 }

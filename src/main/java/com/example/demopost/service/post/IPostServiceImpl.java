@@ -74,4 +74,13 @@ public class IPostServiceImpl implements IPostService {
       throw new NotFoundException("no search id");
     }
   }
+
+  @Override
+  public void deleteById(Long id) {
+    if (iPostRepository.existsById(id)) {
+      iPostRepository.deleteById(id);
+    } else {
+      throw new NotFoundException("no id or id question on delete successful");
+    }
+  }
 }

@@ -1,12 +1,12 @@
 package com.example.demopost.controller;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 import com.example.demopost.data.request.QuestionRequest;
 import com.example.demopost.data.response.QuestionResponse;
 import com.example.demopost.service.Question.IQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,16 +24,25 @@ public class QuestionContronller {
   public QuestionContronller(IQuestionService iQuestionService) {
     this.iQuestionService = iQuestionService;
   }
+
   @PostMapping("/question")
   public ResponseEntity<QuestionResponse> createQuestion(@RequestBody QuestionRequest question) {
     return ResponseEntity.ok(iQuestionService.createQuestion(question));
   }
+
   @GetMapping("/all")
   public ResponseEntity<?> finAllQuestion() {
     return ResponseEntity.ok(iQuestionService.finAllQuestion());
   }
+
   @GetMapping("/id")
   public ResponseEntity<?> searchId(@RequestParam long id) {
     return ResponseEntity.ok(iQuestionService.searchId(id));
+  }
+
+  @DeleteMapping("/delete")
+  public ResponseEntity<?> deleteById(@RequestParam Long id) {
+    iQuestionService.deleteById(id);
+    return ResponseEntity.ok("delete successful question id : " + id);
   }
 }
