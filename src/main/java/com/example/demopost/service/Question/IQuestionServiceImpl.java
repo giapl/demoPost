@@ -34,6 +34,7 @@ public class IQuestionServiceImpl implements IQuestionService {
       question1 = iQuestionRepository.save(question1);
       // response
       QuestionResponse response = new QuestionResponse();
+      response.setId(question1.getId());
       response.setContent(question1.getContent());
       response.setImgUrl(question1.getImageUrl());
       response.setDate(LocalDateTime.now());

@@ -42,6 +42,7 @@ public class IPostServiceImpl implements IPostService {
       topic = iPostRepository.save(topic);
       // response
       PostResponse response = new PostResponse();
+      response.setId(topic.getId());
       response.setDateTime(LocalDateTime.now());
       response.setTitle(topic.getTitle());
       response.setContent(topic.getContent());
