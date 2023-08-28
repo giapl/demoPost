@@ -1,9 +1,7 @@
 package com.example.demopost.service.home;
 
-import com.example.demopost.data.enity.Like;
 import com.example.demopost.data.enity.PostTopic;
 import com.example.demopost.data.enity.Question;
-import com.example.demopost.data.response.PostResponse;
 import java.util.List;
 
 public interface IHomeService {
