@@ -5,11 +5,12 @@ import com.example.demopost.data.enity.PostTopic;
 import com.example.demopost.data.request.PostRequest;
 import com.example.demopost.data.response.PostResponse;
 import com.example.demopost.exception.InternalServerException;
+import com.example.demopost.exception.NotFoundException;
 import com.example.demopost.repository.IPostRepository;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,7 @@ public class IPostServiceImpl implements IPostService {
     topic.setLikes(like);
     try {
       topic = iPostRepository.save(topic);
-      // response
+      // response post
       PostResponse response = new PostResponse();
       response.setId(topic.getId());
       response.setDateTime(LocalDateTime.now());
@@ -62,5 +63,15 @@ public class IPostServiceImpl implements IPostService {
   @Override
   public List<PostTopic> searchByTitle(String title) {
     return iPostRepository.findByTitleContainingIgnoreCase(title);
+  }
+
+  @Override
+  public Optional<PostTopic> searchById(Long id) {
+    Optional<PostTopic> postTopic = iPostRepository.findById(id);
+    if (postTopic.isPresent()) {
+      return Optional.of(postTopic.get());
+    } else {
+      throw new NotFoundException("no search id");
+    }
   }
 }

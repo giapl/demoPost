@@ -1,13 +1,14 @@
 package com.example.demopost.controller;
 
-import com.example.demopost.data.enity.PostTopic;
 import com.example.demopost.data.request.PostRequest;
 import com.example.demopost.data.response.PostResponse;
 import com.example.demopost.service.post.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,5 +38,10 @@ public class PostController {
   @GetMapping("/search")
   public ResponseEntity<?> searchByTitle(@RequestParam("title") String title) {
     return ResponseEntity.ok(iPostService.searchByTitle(title));
+  }
+
+  @GetMapping("/search/id")
+  public ResponseEntity<?> searchById(@RequestParam long id) {
+    return ResponseEntity.ok(iPostService.searchById(id));
   }
 }

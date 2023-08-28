@@ -2,6 +2,7 @@ package com.example.demopost.repository;
 
 import com.example.demopost.data.enity.PostTopic;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,4 +22,9 @@ public interface IPostRepository extends JpaRepository<PostTopic, Long> {
   // jpa hien thi bai moi post len
   @Query(value = "select * from topic order by  id desc ", nativeQuery = true)
   List<PostTopic> findAllBYIdOrderBy();
+
+  // jpa search theo id
+  @Query(value = "select * from topic where id = :id", nativeQuery = true)
+  Optional<PostTopic> findById(@Param("id") long id);
+
 }
