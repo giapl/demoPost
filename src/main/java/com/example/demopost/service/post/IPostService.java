@@ -9,13 +9,15 @@ import java.util.Optional;
 
 public interface IPostService {
 
-  PostResponse createTopic(PostRequest post); // method them post
+  PostTopic createTopic(PostRequest post); // method them post
 
   List<PostTopic> findAllTopic(); // method hien thi all bai post
 
-  List<PostTopic> searchByTitle(String title); // method search theo title bai post
+  List<PostResponse> searchByTitle(String title); // method search theo title bai post
 
-  Optional<PostTopic> searchById(Long id); // method search theo id bai post
+  Optional<PostResponse> searchById(Long id); // method search theo id bai post
 
   void deleteById(Long id); // method delete postTopic theo id
+
+  List<PostResponse> getAllPostResponse();
 }

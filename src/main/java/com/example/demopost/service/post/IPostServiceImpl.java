@@ -1,5 +1,6 @@
 package com.example.demopost.service.post;
 
+import com.example.demopost.convert.UserConvert;
 import com.example.demopost.data.enity.Like;
 import com.example.demopost.data.enity.PostTopic;
 import com.example.demopost.data.request.PostRequest;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -20,13 +22,18 @@ public class IPostServiceImpl implements IPostService {
 
   private IPostRepository iPostRepository;
 
+
+  private UserConvert userConvert;
+
+
   @Autowired
-  public IPostServiceImpl(IPostRepository iPostRepository) {
+  public IPostServiceImpl(IPostRepository iPostRepository, UserConvert userConvert) {
     this.iPostRepository = iPostRepository;
+    this.userConvert = userConvert;
   }
 
   @Override
-  public PostResponse createTopic(PostRequest post) {
+  public PostTopic createTopic(PostRequest post) {
     PostTopic topic = new PostTopic();
     topic.setDateTime(LocalDateTime.now());
     topic.setTitle(post.getTitle());
@@ -40,16 +47,7 @@ public class IPostServiceImpl implements IPostService {
     like.add(like1);
     topic.setLikes(like);
     try {
-      topic = iPostRepository.save(topic);
-      // response post
-      PostResponse response = new PostResponse();
-      response.setId(topic.getId());
-      response.setDateTime(LocalDateTime.now());
-      response.setTitle(topic.getTitle());
-      response.setContent(topic.getContent());
-      response.setImgUrl(topic.getImageUrl());
-      response.setLike(topic.getLikes().get(0).getLike());
-      return response;
+      return iPostRepository.save(topic);
     } catch (DataAccessException e) {
       throw new InternalServerException("sorry save database");
     }
@@ -61,15 +59,23 @@ public class IPostServiceImpl implements IPostService {
   }
 
   @Override
-  public List<PostTopic> searchByTitle(String title) {
-    return iPostRepository.findByTitleContainingIgnoreCase(title);
+  public List<PostResponse> searchByTitle(String title) {
+    try {
+      List<PostTopic> postTopicList = iPostRepository.findByTitleContainingIgnoreCase(title);
+      return postTopicList
+          .stream()
+          .map(userConvert::convertEntityToDo)
+          .collect(Collectors.toList());
+    } catch (Exception e) {
+      throw new NotFoundException("no title database");
+    }
   }
 
   @Override
-  public Optional<PostTopic> searchById(Long id) {
+  public Optional<PostResponse> searchById(Long id) {
     Optional<PostTopic> postTopic = iPostRepository.findById(id);
     if (postTopic.isPresent()) {
-      return Optional.of(postTopic.get());
+      return Optional.of(userConvert.convertEntityToDo(postTopic.get()));
     } else {
       throw new NotFoundException("no search id");
     }
@@ -83,4 +89,15 @@ public class IPostServiceImpl implements IPostService {
       throw new NotFoundException("no id or id question on delete successful");
     }
   }
+
+  @Override
+  public List<PostResponse> getAllPostResponse() {
+    return iPostRepository.findAll()
+        .stream()
+        .map(userConvert::convertEntityToDo)
+        .collect(Collectors.toList());
+  }
 }
+
+
+

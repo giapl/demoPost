@@ -3,6 +3,7 @@ package com.example.demopost.controller;
 import com.example.demopost.data.request.PostRequest;
 import com.example.demopost.data.response.PostResponse;
 import com.example.demopost.service.post.IPostService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,7 +26,7 @@ public class PostController {
   }
 
   @PostMapping("/topic")
-  public ResponseEntity<PostResponse> createTopic(@RequestBody PostRequest post) {
+  public ResponseEntity<?> createTopic(@RequestBody PostRequest post) {
     return ResponseEntity.ok(iPostService.createTopic(post));
   }
 
@@ -48,5 +49,9 @@ public class PostController {
   public ResponseEntity<?> deleteById(@RequestParam Long id) {
     iPostService.deleteById(id);
     return ResponseEntity.ok("delete successful postTopic id : " + id);
+  }
+  @GetMapping("/all-PostResponse")
+  public List<PostResponse> getAllPostResponse() {
+    return iPostService.getAllPostResponse();
   }
 }
