@@ -1,5 +1,6 @@
 package com.example.demopost.service.Question;
 
+import com.example.demopost.convert.UserConvert;
 import com.example.demopost.data.enity.Question;
 import com.example.demopost.data.request.QuestionRequest;
 import com.example.demopost.data.response.QuestionResponse;
@@ -9,6 +10,7 @@ import com.example.demopost.repository.IQuestionRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -18,9 +20,12 @@ public class IQuestionServiceImpl implements IQuestionService {
 
   private IQuestionRepository iQuestionRepository;
 
+  private UserConvert userConvert;
+
   @Autowired
-  public IQuestionServiceImpl(IQuestionRepository iQuestionRepository) {
+  public IQuestionServiceImpl(IQuestionRepository iQuestionRepository, UserConvert userConvert) {
     this.iQuestionRepository = iQuestionRepository;
+    this.userConvert = userConvert;
   }
 
 
@@ -46,16 +51,19 @@ public class IQuestionServiceImpl implements IQuestionService {
   }
 
   @Override
-  public List<Question> finAllQuestion() {
-    return iQuestionRepository.findAll();
+  public List<QuestionResponse> finAllQuestion() {
+    return iQuestionRepository.findAll()
+        .stream()
+        .map(userConvert::convertEntityTODo1)
+        .collect(Collectors.toList());
   }
 
 
   @Override
-  public Optional<Question> searchId(long id) {
+  public Optional<QuestionResponse> searchId(long id) {
     Optional<Question> questionOptional = iQuestionRepository.searchById(id);
     if (questionOptional.isPresent()) {
-      return Optional.of(questionOptional.get());
+      return Optional.of(userConvert.convertEntityTODo1(questionOptional.get()));
     } else {
       throw new NotFoundException("no id database");
     }
