@@ -54,8 +54,11 @@ public class IPostServiceImpl implements IPostService {
   }
 
   @Override
-  public List<PostTopic> findAllTopic() {
-    return iPostRepository.findAll();
+  public List<PostResponse> findAllTopic() {
+    return iPostRepository.findAll()
+        .stream()
+        .map(userConvert::convertEntityToDo)
+        .collect(Collectors.toList());
   }
 
   @Override
@@ -90,13 +93,6 @@ public class IPostServiceImpl implements IPostService {
     }
   }
 
-  @Override
-  public List<PostResponse> getAllPostResponse() {
-    return iPostRepository.findAll()
-        .stream()
-        .map(userConvert::convertEntityToDo)
-        .collect(Collectors.toList());
-  }
 }
 
 

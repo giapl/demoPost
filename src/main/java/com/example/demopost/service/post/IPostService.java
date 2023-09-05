@@ -11,7 +11,7 @@ public interface IPostService {
 
   PostTopic createTopic(PostRequest post); // method them post
 
-  List<PostTopic> findAllTopic(); // method hien thi all bai post
+  List<PostResponse> findAllTopic(); // method hien thi all bai post
 
   List<PostResponse> searchByTitle(String title); // method search theo title bai post
 
@@ -19,5 +19,5 @@ public interface IPostService {
 
   void deleteById(Long id); // method delete postTopic theo id
 
-  List<PostResponse> getAllPostResponse();
+
 }
