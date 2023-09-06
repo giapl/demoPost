@@ -26,4 +26,6 @@ public interface IPostRepository extends JpaRepository<PostTopic, Long> {
   // jpa search theo id
   @Query(value = "select * from topic where id = :id", nativeQuery = true)
   Optional<PostTopic> findById(@Param("id") Long id);
+
+
 }
