@@ -19,5 +19,5 @@ public interface IPostService {
 
   void deleteById(Long id); // method delete postTopic theo id
 
-  void updateById(Long id , PostRequest postRequest); // method update postTopic theo id
+  void updateById(Long id, PostRequest postRequest); // method update postTopic theo id
 }

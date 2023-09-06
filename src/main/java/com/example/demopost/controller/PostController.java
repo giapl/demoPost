@@ -50,9 +50,10 @@ public class PostController {
     iPostService.deleteById(id);
     return ResponseEntity.ok("delete successful postTopic id : " + id);
   }
+
   @PutMapping("/update/{id}")
-  public ResponseEntity<?> updateById(@PathVariable Long id , @RequestBody PostRequest postRequest) {
-    iPostService.updateById(id,postRequest);
+  public ResponseEntity<?> updateById(@PathVariable Long id, @RequestBody PostRequest postRequest) {
+    iPostService.updateById(id, postRequest);
     return ResponseEntity.ok("update successful");
   }
 }

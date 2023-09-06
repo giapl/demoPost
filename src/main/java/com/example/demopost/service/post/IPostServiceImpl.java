@@ -96,7 +96,7 @@ public class IPostServiceImpl implements IPostService {
   @Override
   public void updateById(Long id, PostRequest postRequest) {
     Optional<PostTopic> topicOptional = iPostRepository.findById(id);
-    if(topicOptional.isPresent()){
+    if (topicOptional.isPresent()) {
       PostTopic postTopic = topicOptional.get();
       postTopic.setTitle(postRequest.getTitle());
       postTopic.setContent(postRequest.getContent());
