@@ -4,7 +4,6 @@ import com.example.demopost.convert.UserConvert;
 import com.example.demopost.data.enity.Question;
 import com.example.demopost.data.request.QuestionRequest;
 import com.example.demopost.data.response.QuestionResponse;
-import com.example.demopost.exception.InternalServerException;
 import com.example.demopost.exception.NotFoundException;
 import com.example.demopost.repository.IQuestionRepository;
 import java.time.LocalDateTime;
@@ -12,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,24 +28,12 @@ public class IQuestionServiceImpl implements IQuestionService {
 
 
   @Override
-  public QuestionResponse createQuestion(QuestionRequest question) {
+  public Question createQuestion(QuestionRequest question) {
     Question question1 = new Question();
     question1.setContent(question.getContent());
     question1.setImageUrl(question.getImgUrl());
     question1.setDate(LocalDateTime.now());
-    try {
-      question1 = iQuestionRepository.save(question1);
-      // response
-      QuestionResponse response = new QuestionResponse();
-      response.setId(question1.getId());
-      response.setContent(question1.getContent());
-      response.setImgUrl(question1.getImageUrl());
-      response.setDate(LocalDateTime.now());
-      response.setComment(question1.getComment());
-      return response;
-    } catch (DataAccessException e) {
-      throw new InternalServerException("sorry save database");
-    }
+    return iQuestionRepository.save(question1);
   }
 
   @Override
@@ -75,6 +61,19 @@ public class IQuestionServiceImpl implements IQuestionService {
       iQuestionRepository.deleteById(id);
     } else {
       throw new NotFoundException("no id or id question on delete successful");
+    }
+  }
+
+  @Override
+  public void updateById(Long id, QuestionRequest questionRequest) {
+    Optional<Question> questionOptional = iQuestionRepository.findById(id);
+    if (questionOptional.isPresent()) {
+      Question question = questionOptional.get();
+      question.setContent(questionRequest.getContent());
+      question.setImageUrl(questionRequest.getImgUrl());
+      question.setDate(LocalDateTime.now());
+    } else {
+      throw new NotFoundException("no id");
     }
   }
 }
