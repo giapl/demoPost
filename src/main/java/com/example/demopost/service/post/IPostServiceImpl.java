@@ -7,6 +7,7 @@ import com.example.demopost.data.request.PostRequest;
 import com.example.demopost.data.response.PostResponse;
 import com.example.demopost.exception.InternalServerException;
 import com.example.demopost.exception.NotFoundException;
+import com.example.demopost.repository.ILikeRepository;
 import com.example.demopost.repository.IPostRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,13 +23,17 @@ public class IPostServiceImpl implements IPostService {
 
   private IPostRepository iPostRepository;
 
+  private ILikeRepository iLikeRepository;
+
 
   private UserConvert userConvert;
 
 
   @Autowired
-  public IPostServiceImpl(IPostRepository iPostRepository, UserConvert userConvert) {
+  public IPostServiceImpl(IPostRepository iPostRepository, ILikeRepository iLikeRepository,
+      UserConvert userConvert) {
     this.iPostRepository = iPostRepository;
+    this.iLikeRepository = iLikeRepository;
     this.userConvert = userConvert;
   }
 
@@ -105,6 +110,19 @@ public class IPostServiceImpl implements IPostService {
       iPostRepository.save(postTopic);
     } else {
       throw new NotFoundException("no id");
+    }
+  }
+
+  @Override
+  public void increaseLikes(Long id, Like like) {
+    Optional<Like> optionalLike = iLikeRepository.findById(id);
+    if (optionalLike.isPresent()) {
+      Like like1 = optionalLike.get();
+      like1.setLike(like1.getLike() + 1); // tang like len 1 like khi tim dc pót_id
+      like1.setDateLike(LocalDateTime.now());
+      iLikeRepository.save(like1);
+    } else {
+      throw new NotFoundException("no post_id");
     }
   }
 }

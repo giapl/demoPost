@@ -1,5 +1,6 @@
 package com.example.demopost.service.post;
 
+import com.example.demopost.data.enity.Like;
 import com.example.demopost.data.enity.PostTopic;
 import com.example.demopost.data.request.PostRequest;
 import com.example.demopost.data.response.PostResponse;
@@ -20,4 +21,6 @@ public interface IPostService {
   void deleteById(Long id); // method delete postTopic theo id
 
   void updateById(Long id, PostRequest postRequest); // method update postTopic theo id
+
+  void increaseLikes(Long id , Like like); // method tang like bai post
 }

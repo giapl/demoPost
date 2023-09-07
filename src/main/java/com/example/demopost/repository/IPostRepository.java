@@ -1,5 +1,6 @@
 package com.example.demopost.repository;
 
+import com.example.demopost.data.enity.Like;
 import com.example.demopost.data.enity.PostTopic;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +27,5 @@ public interface IPostRepository extends JpaRepository<PostTopic, Long> {
   // jpa search theo id
   @Query(value = "select * from topic where id = :id", nativeQuery = true)
   Optional<PostTopic> findById(@Param("id") Long id);
-
 
 }

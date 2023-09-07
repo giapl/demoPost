@@ -72,6 +72,7 @@ public class IQuestionServiceImpl implements IQuestionService {
       question.setContent(questionRequest.getContent());
       question.setImageUrl(questionRequest.getImgUrl());
       question.setDate(LocalDateTime.now());
+      iQuestionRepository.save(question);
     } else {
       throw new NotFoundException("no id");
     }
