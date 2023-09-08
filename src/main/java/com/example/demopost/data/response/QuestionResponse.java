@@ -9,7 +9,7 @@ public class QuestionResponse {
   private long id;
   private LocalDateTime date;
   private String content;
-  private String imgUrl;
+  private String imageUrl;
   private String comment;
 
 }

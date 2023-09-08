@@ -20,7 +20,6 @@ public class UserConvert {
 
   public PostResponse convertEntityToDo(PostTopic topic) {
     PostResponse response = modelMapper.map(topic, PostResponse.class);
-    response.setImgUrl(topic.getImageUrl());
     if (!topic.getLikes().isEmpty()) {
       response.setLike(topic.getLikes().get(0).getLike());
     } else {
@@ -31,7 +30,6 @@ public class UserConvert {
 
   public QuestionResponse convertEntityTODo1(Question question) {
     QuestionResponse questionResponse = modelMapper.map(question, QuestionResponse.class);
-    questionResponse.setImgUrl(question.getImageUrl());
     return questionResponse;
   }
 }
