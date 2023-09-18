@@ -19,38 +19,38 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/home/CauHoi")
 public class QuestionContronller {
 
-  private IQuestionService iQuestionService;
+    private IQuestionService iQuestionService;
 
-  @Autowired
-  public QuestionContronller(IQuestionService iQuestionService) {
-    this.iQuestionService = iQuestionService;
-  }
+    @Autowired
+    public QuestionContronller(IQuestionService iQuestionService) {
+        this.iQuestionService = iQuestionService;
+    }
 
-  @PostMapping("/question")
-  public ResponseEntity<?> createQuestion(@RequestBody QuestionRequest question) {
-    return ResponseEntity.ok(iQuestionService.createQuestion(question));
-  }
+    @PostMapping("/question")
+    public ResponseEntity<?> createQuestion(@RequestBody QuestionRequest question) {
+        return ResponseEntity.ok(iQuestionService.createQuestion(question));
+    }
 
-  @GetMapping("/all")
-  public ResponseEntity<?> finAllQuestion() {
-    return ResponseEntity.ok(iQuestionService.finAllQuestion());
-  }
+    @GetMapping("/all")
+    public ResponseEntity<?> finAllQuestion() {
+        return ResponseEntity.ok(iQuestionService.finAllQuestion());
+    }
 
-  @GetMapping("/id")
-  public ResponseEntity<?> searchId(@RequestParam long id) {
-    return ResponseEntity.ok(iQuestionService.searchId(id));
-  }
+    @GetMapping("/id")
+    public ResponseEntity<?> searchId(@RequestParam long id) {
+        return ResponseEntity.ok(iQuestionService.searchId(id));
+    }
 
-  @DeleteMapping("/delete")
-  public ResponseEntity<?> deleteById(@RequestParam Long id) {
-    iQuestionService.deleteById(id);
-    return ResponseEntity.ok("delete successful question id : " + id);
-  }
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteById(@RequestParam Long id) {
+        iQuestionService.deleteById(id);
+        return ResponseEntity.ok("delete successful question id : " + id);
+    }
 
-  @PutMapping("/update/{id}")
-  public ResponseEntity<?> updateById(@PathVariable Long id,
-      @RequestBody QuestionRequest questionRequest) {
-    iQuestionService.updateById(id, questionRequest);
-    return ResponseEntity.ok("update successful");
-  }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateById(@PathVariable Long id,
+                                        @RequestBody QuestionRequest questionRequest) {
+        iQuestionService.updateById(id, questionRequest);
+        return ResponseEntity.ok("update successful");
+    }
 }
