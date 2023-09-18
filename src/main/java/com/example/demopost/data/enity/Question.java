@@ -28,7 +28,7 @@ public class Question {
   private LocalDateTime date;
   @Column(name = "content")
   private String content;
-  @Column(name = "imageUrl")
+  @Column(name = "image_url")
   private String imageUrl;
   @Column(name = "comment")
   private String comment;

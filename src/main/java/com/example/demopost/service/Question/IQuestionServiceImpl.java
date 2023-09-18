@@ -1,6 +1,6 @@
 package com.example.demopost.service.Question;
 
-import com.example.demopost.convert.UserConvert;
+import com.example.demopost.convert.QuestionConvert;
 import com.example.demopost.data.enity.Question;
 import com.example.demopost.data.request.QuestionRequest;
 import com.example.demopost.data.response.QuestionResponse;
@@ -18,12 +18,12 @@ public class IQuestionServiceImpl implements IQuestionService {
 
   private IQuestionRepository iQuestionRepository;
 
-  private UserConvert userConvert;
+  private QuestionConvert questionConvert;
 
   @Autowired
-  public IQuestionServiceImpl(IQuestionRepository iQuestionRepository, UserConvert userConvert) {
+  public IQuestionServiceImpl(IQuestionRepository iQuestionRepository, QuestionConvert questionConvert) {
     this.iQuestionRepository = iQuestionRepository;
-    this.userConvert = userConvert;
+    this.questionConvert = questionConvert;
   }
 
 
@@ -40,7 +40,7 @@ public class IQuestionServiceImpl implements IQuestionService {
   public List<QuestionResponse> finAllQuestion() {
     return iQuestionRepository.findAll()
         .stream()
-        .map(userConvert::convertEntityTODo1)
+        .map(questionConvert::ConvertEntityQuestion)
         .collect(Collectors.toList());
   }
 
@@ -49,7 +49,7 @@ public class IQuestionServiceImpl implements IQuestionService {
   public Optional<QuestionResponse> searchId(long id) {
     Optional<Question> questionOptional = iQuestionRepository.searchById(id);
     if (questionOptional.isPresent()) {
-      return Optional.of(userConvert.convertEntityTODo1(questionOptional.get()));
+      return Optional.of(questionConvert.ConvertEntityQuestion(questionOptional.get()));
     } else {
       throw new NotFoundException("no id database");
     }

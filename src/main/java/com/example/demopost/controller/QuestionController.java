@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/home/CauHoi")
-public class QuestionContronller {
+public class QuestionController {
 
-    private IQuestionService iQuestionService;
+    private final IQuestionService iQuestionService;
 
     @Autowired
-    public QuestionContronller(IQuestionService iQuestionService) {
+    public QuestionController(IQuestionService iQuestionService) {
         this.iQuestionService = iQuestionService;
     }
 

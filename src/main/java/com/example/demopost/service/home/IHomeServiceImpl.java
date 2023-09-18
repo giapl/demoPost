@@ -1,5 +1,6 @@
 package com.example.demopost.service.home;
 
+import com.example.demopost.convert.QuestionConvert;
 import com.example.demopost.convert.UserConvert;
 import com.example.demopost.data.enity.PostTopic;
 import com.example.demopost.data.response.PostResponse;
@@ -19,13 +20,17 @@ public class IHomeServiceImpl implements IHomeService {
 
   private UserConvert userConvert;
 
+  private QuestionConvert questionConvert;
+
 
   @Autowired
   public IHomeServiceImpl(IPostRepository iPostRepository,
-      IQuestionRepository iQuestionRepository, UserConvert userConvert) {
+      IQuestionRepository iQuestionRepository, UserConvert userConvert,
+      QuestionConvert questionConvert) {
     this.iPostRepository = iPostRepository;
     this.iQuestionRepository = iQuestionRepository;
     this.userConvert = userConvert;
+    this.questionConvert=questionConvert;
   }
 
   @Override
@@ -53,7 +58,7 @@ public class IHomeServiceImpl implements IHomeService {
   public List<QuestionResponse> setQuestions() {
     return iQuestionRepository.findAll()
         .stream()
-        .map(userConvert::convertEntityTODo1)
+        .map(questionConvert::ConvertEntityQuestion)
         .collect(Collectors.toList());
   }
 }

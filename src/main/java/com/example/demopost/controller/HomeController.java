@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/home")
 public class HomeController {
 
-  private IHomeService iHomeService;
+  private final IHomeService iHomeService;
 
   @Autowired
   public HomeController(IHomeService iHomeService) {
@@ -35,7 +35,7 @@ public class HomeController {
   }
 
   @GetMapping("/ChoBan")
-  public ResponseEntity<?> get_ChoBan() {
+  public ResponseEntity<?> getChoBan() {
     return ResponseEntity.ok(iHomeService.getChoBan());
   }
 }

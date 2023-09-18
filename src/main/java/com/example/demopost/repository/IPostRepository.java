@@ -1,6 +1,5 @@
 package com.example.demopost.repository;
 
-import com.example.demopost.data.enity.Like;
 import com.example.demopost.data.enity.PostTopic;
 import java.util.List;
 import java.util.Optional;
