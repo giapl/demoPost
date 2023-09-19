@@ -44,6 +44,7 @@ public class IPostServiceImpl implements IPostService {
     topic.setTitle(post.getTitle());
     topic.setContent(post.getContent());
     topic.setImageUrl(post.getImageUrl());
+    topic.setUpdateTime(LocalDateTime.now());
     // like tuong ung
     Like like1 = new Like();
     like1.setLike(0);
@@ -106,7 +107,7 @@ public class IPostServiceImpl implements IPostService {
       postTopic.setTitle(postRequest.getTitle());
       postTopic.setContent(postRequest.getContent());
       postTopic.setImageUrl(postRequest.getImageUrl());
-      postTopic.setDateTime(LocalDateTime.now());
+      postTopic.setUpdateTime(LocalDateTime.now());
       iPostRepository.save(postTopic);
     } else {
       throw new NotFoundException("no id");

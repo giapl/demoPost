@@ -33,6 +33,7 @@ public class IQuestionServiceImpl implements IQuestionService {
     question1.setContent(question.getContent());
     question1.setImageUrl(question.getImgUrl());
     question1.setDate(LocalDateTime.now());
+    question1.setUpdateTime(LocalDateTime.now());
     return iQuestionRepository.save(question1);
   }
 
@@ -71,7 +72,7 @@ public class IQuestionServiceImpl implements IQuestionService {
       Question question = questionOptional.get();
       question.setContent(questionRequest.getContent());
       question.setImageUrl(questionRequest.getImgUrl());
-      question.setDate(LocalDateTime.now());
+      question.setUpdateTime(LocalDateTime.now());
       iQuestionRepository.save(question);
     } else {
       throw new NotFoundException("no id");

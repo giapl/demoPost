@@ -36,9 +36,12 @@ public class PostTopic {
   private String content;
   @Column(name = "image")
   private String imageUrl;
-  @Column(name = "date")
-  @CreationTimestamp
+  @Column(name = "create_at")
   private LocalDateTime dateTime;
+  @Column(name = "update_at")
+  @CreationTimestamp
+  private LocalDateTime updateTime;
+
   @JsonManagedReference
   @OneToMany(mappedBy = "postTopic", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Like> likes = new ArrayList<>();
