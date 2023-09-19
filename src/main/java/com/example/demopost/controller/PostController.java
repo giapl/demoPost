@@ -28,7 +28,8 @@ public class PostController {
 
   @PostMapping("/topic")
   public ResponseEntity<?> createTopic(@RequestBody PostRequest post) {
-    return ResponseEntity.ok(iPostService.createTopic(post));
+    iPostService.createTopic(post);
+    return ResponseEntity.ok("successful topic");
   }
 
   @GetMapping("/all")
