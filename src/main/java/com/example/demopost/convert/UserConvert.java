@@ -20,8 +20,10 @@ public class UserConvert {
     PostResponse response = modelMapper.map(topic, PostResponse.class);
     if (!topic.getLikes().isEmpty()) {
       response.setLike(topic.getLikes().get(0).getLike());
+      response.setShare(topic.getLikes().get(0).getShare());
     } else {
       response.setLike(0);
+      response.setShare(0);
     }
     return response;
   }

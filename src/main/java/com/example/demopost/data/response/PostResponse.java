@@ -13,4 +13,5 @@ public class PostResponse {
   private String content;
   private String imageUrl;
   private long like;
+  private long share;
 }

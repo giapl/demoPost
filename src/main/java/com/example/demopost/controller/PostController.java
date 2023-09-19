@@ -64,4 +64,5 @@ public class PostController {
     iPostService.increaseLikes(id, like);
     return ResponseEntity.ok("like postTopic successful");
   }
+
 }

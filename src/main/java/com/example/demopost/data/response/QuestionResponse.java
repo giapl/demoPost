@@ -10,6 +10,5 @@ public class QuestionResponse {
   private LocalDateTime date;
   private String content;
   private String imageUrl;
-  private String comment;
 
 }

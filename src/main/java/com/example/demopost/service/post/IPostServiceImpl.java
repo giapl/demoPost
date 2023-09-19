@@ -52,6 +52,13 @@ public class IPostServiceImpl implements IPostService {
     List<Like> like = new ArrayList<>();
     like.add(like1);
     topic.setLikes(like);
+    // share tuong ung
+    Like share1 = new Like();
+    share1.setShare(0);
+    share1.setPostTopic(topic);
+    List<Like> share = new ArrayList<>();
+    share.add(share1);
+    topic.setLikes(share);
     try {
       return iPostRepository.save(topic);
     } catch (DataAccessException e) {
@@ -61,9 +68,7 @@ public class IPostServiceImpl implements IPostService {
 
   @Override
   public List<PostResponse> findAllTopic() {
-    return iPostRepository.findAll()
-        .stream()
-        .map(userConvert::convertEntityToDo)
+    return iPostRepository.findAll().stream().map(userConvert::convertEntityToDo)
         .collect(Collectors.toList());
   }
 
@@ -71,9 +76,7 @@ public class IPostServiceImpl implements IPostService {
   public List<PostResponse> searchByTitle(String title) {
     try {
       List<PostTopic> postTopicList = iPostRepository.findByTitleContainingIgnoreCase(title);
-      return postTopicList
-          .stream()
-          .map(userConvert::convertEntityToDo)
+      return postTopicList.stream().map(userConvert::convertEntityToDo)
           .collect(Collectors.toList());
     } catch (Exception e) {
       throw new NotFoundException("no title database");
@@ -126,6 +129,7 @@ public class IPostServiceImpl implements IPostService {
       throw new NotFoundException("no post_id");
     }
   }
+
 }
 
 

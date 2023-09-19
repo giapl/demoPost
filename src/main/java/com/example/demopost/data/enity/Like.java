@@ -34,6 +34,9 @@ public class Like {
   @Column(name = "date")
   @CreationTimestamp
   private LocalDateTime dateLike;
+  @Column(name = "share")
+  private long share;
+
 
   @JsonBackReference
   @ManyToOne(fetch = FetchType.LAZY)
