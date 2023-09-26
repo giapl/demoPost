@@ -6,6 +6,6 @@ import lombok.Data;
 public class QuestionRequest {
 
   private String content;
-  private String imgUrl;
+  private String imageUrl;
 
 }

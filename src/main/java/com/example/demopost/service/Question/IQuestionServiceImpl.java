@@ -31,7 +31,7 @@ public class IQuestionServiceImpl implements IQuestionService {
   public Question createQuestion(QuestionRequest question) {
     Question question1 = new Question();
     question1.setContent(question.getContent());
-    question1.setImageUrl(question.getImgUrl());
+    question1.setImageUrl(question.getImageUrl());
     question1.setDate(LocalDateTime.now());
     question1.setUpdateTime(LocalDateTime.now());
     return iQuestionRepository.save(question1);
@@ -71,7 +71,7 @@ public class IQuestionServiceImpl implements IQuestionService {
     if (questionOptional.isPresent()) {
       Question question = questionOptional.get();
       question.setContent(questionRequest.getContent());
-      question.setImageUrl(questionRequest.getImgUrl());
+      question.setImageUrl(questionRequest.getImageUrl());
       question.setUpdateTime(LocalDateTime.now());
       iQuestionRepository.save(question);
     } else {
