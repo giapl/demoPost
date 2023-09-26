@@ -23,7 +23,7 @@ public interface IPostRepository extends JpaRepository<PostTopic, Long> {
   @Query(value = "select * from topic order by  id desc ", nativeQuery = true)
   List<PostTopic> findAllBYIdOrderBy();
 
-  // jpa search theo id
+  // jpa search theo idl
   @Query(value = "select * from topic where id = :id", nativeQuery = true)
   Optional<PostTopic> findById(@Param("id") Long id);
 

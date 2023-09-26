@@ -68,7 +68,8 @@ public class IPostServiceImpl implements IPostService {
 
   @Override
   public List<PostResponse> findAllTopic() {
-    return iPostRepository.findAll().stream().map(userConvert::convertEntityToDo)
+    return iPostRepository.findAll()
+        .stream().map(userConvert::convertEntityToDo)
         .collect(Collectors.toList());
   }
 

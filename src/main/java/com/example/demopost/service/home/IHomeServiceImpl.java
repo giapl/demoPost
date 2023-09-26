@@ -2,7 +2,6 @@ package com.example.demopost.service.home;
 
 import com.example.demopost.convert.QuestionConvert;
 import com.example.demopost.convert.UserConvert;
-import com.example.demopost.data.enity.PostTopic;
 import com.example.demopost.data.response.PostResponse;
 import com.example.demopost.data.response.QuestionResponse;
 import com.example.demopost.repository.IPostRepository;
@@ -21,7 +20,6 @@ public class IHomeServiceImpl implements IHomeService {
   private UserConvert userConvert;
 
   private QuestionConvert questionConvert;
-
 
   @Autowired
   public IHomeServiceImpl(IPostRepository iPostRepository,
@@ -42,7 +40,7 @@ public class IHomeServiceImpl implements IHomeService {
   }
 
   @Override
-  public List<PostTopic> setOutstanding() {
+  public List<PostResponse> setOutstanding() {
     return null;
   }
 

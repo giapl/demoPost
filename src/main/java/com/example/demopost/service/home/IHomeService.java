@@ -9,7 +9,7 @@ public interface IHomeService {
 
   List<PostResponse> getChoBan(); // method hien thi toan bo bai post
 
-  List<PostTopic> setOutstanding(); // method lay cac bai post noi bat theo so like
+  List<PostResponse> setOutstanding(); // method lay cac bai post noi bat theo so like
 
   List<PostResponse> setNews(); // method lay cac bai viet moi dang len dau tien
 
