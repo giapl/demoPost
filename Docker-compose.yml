@@ -2,24 +2,25 @@
 version: '3'
 
 services:
-  mysql_db:
-    image: mysql8
+  database_mysql:
+    image: mysql_8.3.0
     environment:
       - MYSQL_ROOT_PASSWORD=@Danggiap17
       - MYSQL_DATABASE=jwt
+    network_mode: host
     ports:
       - "3306:3306"
-    network_mode: host
     volumes:
-      - database:/var/lib/docker/volumes/database/_data
+      - database_mysql:/var/lib/docker/volumes/database_mysql
 
-  app_Noron :
+
+  noron_be:
     image: app_noron
     ports:
       - "8080:8080"
     depends_on:
-      - mysql_db
+      - database_mysql
     network_mode: host
-volumes:
-  database :
 
+volumes:
+  database_mysql:
