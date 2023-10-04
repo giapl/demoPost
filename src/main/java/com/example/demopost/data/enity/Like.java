@@ -36,6 +36,8 @@ public class Like {
   private LocalDateTime dateLike;
   @Column(name = "share")
   private long share;
+  @Column(name = "date_share")
+  private LocalDateTime dateShare;
 
 
   @JsonBackReference

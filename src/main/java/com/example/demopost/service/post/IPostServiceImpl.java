@@ -21,12 +21,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class IPostServiceImpl implements IPostService {
 
-  private IPostRepository iPostRepository;
+  private final IPostRepository iPostRepository;
 
-  private ILikeRepository iLikeRepository;
+  private final ILikeRepository iLikeRepository;
 
-
-  private UserConvert userConvert;
+  private final UserConvert userConvert;
 
 
   @Autowired
@@ -128,6 +127,44 @@ public class IPostServiceImpl implements IPostService {
       iLikeRepository.save(like1);
     } else {
       throw new NotFoundException("no post_id");
+    }
+  }
+
+  @Override
+  public PostTopic increaseShare(Long id, Like like, PostRequest postRequest) {
+
+    Optional<Like> optionalShare = iLikeRepository.findById(id); // tim id bai post_id trong like
+    if (optionalShare.isPresent()) {
+      Like share = optionalShare.get(); // lay share
+      // tim bai viet goc
+      Optional<PostTopic> optionalPostTopicShare = iPostRepository.findById(id);
+      PostTopic sharePostTopic = optionalPostTopicShare.get();
+
+      // tao 1 bai viet moi
+      PostTopic postTopic = new PostTopic();
+      postTopic.setTitle(postRequest.getTitle());
+      postTopic.setImageUrl(sharePostTopic.getImageUrl());
+      postTopic.setDateTime(LocalDateTime.now());
+      postTopic.setUpdateTime(LocalDateTime.now());
+      share.setDateShare(LocalDateTime.now());
+      share.setShare(share.getShare() + 1); // tang share topic goc len 1
+
+      // tao like tuong ung
+      Like like1 = new Like();
+      like1.setLike(0);
+      like1.setPostTopic(postTopic);
+      // tao share tuong ung
+      Like share1 = new Like();
+      share1.setShare(0);
+      share1.setPostTopic(postTopic);
+      // add like anh share
+      List<Like> share2 = new ArrayList<>();
+      share2.add(like1);
+      share2.add(share1);
+      postTopic.setLikes(share2);
+      return iPostRepository.save(postTopic);
+    } else {
+      throw new NotFoundException("no id topic");
     }
   }
 

@@ -64,5 +64,9 @@ public class PostController {
     iPostService.increaseLikes(id, like);
     return ResponseEntity.ok("like postTopic successful");
   }
-
+  @PostMapping("/share/{post_id}/{id}")
+  public ResponseEntity<?> increaseShare(@PathVariable("post_id") Long id , Like like , @RequestBody PostRequest postRequest) {
+    iPostService.increaseShare(id , like , postRequest);
+    return ResponseEntity.ok("share");
+  }
 }

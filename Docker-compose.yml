@@ -3,7 +3,7 @@ version: '3'
 
 services:
   database_mysql:
-    image: mysql_8.3.0
+    image: mysql_8
     environment:
       - MYSQL_ROOT_PASSWORD=@Danggiap17
       - MYSQL_DATABASE=jwt
@@ -15,7 +15,7 @@ services:
 
 
   noron_be:
-    image: app_noron
+    image: noron_app
     ports:
       - "8080:8080"
     depends_on:
