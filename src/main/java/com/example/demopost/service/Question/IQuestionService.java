@@ -20,5 +20,5 @@ public interface IQuestionService {
 
   void updateById(Long id, QuestionRequest questionRequest); // method update question theo id
 
-  void increaseLike(Long id , LikeQuestion likeQuestion);
+  void increaseLike(Long id , LikeQuestion likeQuestion);    // method like question theo question_id
 }
