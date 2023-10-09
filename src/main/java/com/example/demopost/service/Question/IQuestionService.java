@@ -1,6 +1,7 @@
 package com.example.demopost.service.Question;
 
 
+import com.example.demopost.data.enity.LikeQuestion;
 import com.example.demopost.data.enity.Question;
 import com.example.demopost.data.request.QuestionRequest;
 import com.example.demopost.data.response.QuestionResponse;
@@ -19,4 +20,5 @@ public interface IQuestionService {
 
   void updateById(Long id, QuestionRequest questionRequest); // method update question theo id
 
+  void increaseLike(Long id , LikeQuestion likeQuestion);
 }

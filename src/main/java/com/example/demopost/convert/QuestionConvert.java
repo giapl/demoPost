@@ -14,8 +14,13 @@ public class QuestionConvert {
     this.modelMapper = modelMapper;
   }
 
-  public QuestionResponse ConvertEntityQuestion(Question question){
-    return modelMapper.map(question, QuestionResponse.class);
+  public QuestionResponse ConvertEntityQuestion(Question question) {
+    QuestionResponse questionResponse = modelMapper.map(question, QuestionResponse.class);
+    if (!question.getLikeQuestions().isEmpty()) {
+      questionResponse.setLike(question.getLikeQuestions().get(0).getLike());
+    } else {
+      questionResponse.setLike(0);
+    }
+    return questionResponse;
   }
-
 }

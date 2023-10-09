@@ -1,6 +1,7 @@
 package com.example.demopost.controller;
 
 
+import com.example.demopost.data.enity.LikeQuestion;
 import com.example.demopost.data.request.QuestionRequest;
 import com.example.demopost.service.Question.IQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +53,10 @@ public class QuestionController {
                                         @RequestBody QuestionRequest questionRequest) {
         iQuestionService.updateById(id, questionRequest);
         return ResponseEntity.ok("update successful");
+    }
+    @PutMapping("/like/{question_id}")
+    public ResponseEntity<?> increaseLike(@PathVariable("question_id") Long id , LikeQuestion likeQuestion){
+        iQuestionService.increaseLike(id,likeQuestion);
+        return ResponseEntity.ok("like successful");
     }
 }

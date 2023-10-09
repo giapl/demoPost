@@ -1,12 +1,15 @@
 package com.example.demopost.service.Question;
 
 import com.example.demopost.convert.QuestionConvert;
+import com.example.demopost.data.enity.LikeQuestion;
 import com.example.demopost.data.enity.Question;
 import com.example.demopost.data.request.QuestionRequest;
 import com.example.demopost.data.response.QuestionResponse;
 import com.example.demopost.exception.NotFoundException;
+import com.example.demopost.repository.ILikeQuestionRepository;
 import com.example.demopost.repository.IQuestionRepository;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,10 +23,14 @@ public class IQuestionServiceImpl implements IQuestionService {
 
   private QuestionConvert questionConvert;
 
+  private ILikeQuestionRepository iLikeQuestionRepository;
+
   @Autowired
-  public IQuestionServiceImpl(IQuestionRepository iQuestionRepository, QuestionConvert questionConvert) {
+  public IQuestionServiceImpl(IQuestionRepository iQuestionRepository,
+      QuestionConvert questionConvert, ILikeQuestionRepository iLikeQuestionRepository) {
     this.iQuestionRepository = iQuestionRepository;
     this.questionConvert = questionConvert;
+    this.iLikeQuestionRepository = iLikeQuestionRepository;
   }
 
 
@@ -34,6 +41,18 @@ public class IQuestionServiceImpl implements IQuestionService {
     question1.setImageUrl(question.getImageUrl());
     question1.setDate(LocalDateTime.now());
     question1.setUpdateTime(LocalDateTime.now());
+
+    // like tuong ung
+
+    LikeQuestion likeQuestion = new LikeQuestion();
+    likeQuestion.setLike(0);
+    likeQuestion.setDateTime(LocalDateTime.now());
+    likeQuestion.setQuestions(question1);
+
+    List<LikeQuestion> like = new ArrayList<>();
+    like.add(likeQuestion);
+    question1.setLikeQuestions(like);
+
     return iQuestionRepository.save(question1);
   }
 
@@ -76,6 +95,19 @@ public class IQuestionServiceImpl implements IQuestionService {
       iQuestionRepository.save(question);
     } else {
       throw new NotFoundException("no id");
+    }
+  }
+
+  @Override
+  public void increaseLike(Long id, LikeQuestion likeQuestion) {
+    Optional<LikeQuestion> optionalLikeQuestion = iLikeQuestionRepository.findById(id);
+    if(optionalLikeQuestion.isPresent()){
+
+      LikeQuestion likeQuestion1 = optionalLikeQuestion.get();
+      likeQuestion1.setLike(likeQuestion1.getLike()+1);
+      iLikeQuestionRepository.save(likeQuestion1);
+    } else {
+      throw  new NotFoundException("no question_id");
     }
   }
 }
