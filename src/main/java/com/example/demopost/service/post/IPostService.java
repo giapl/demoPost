@@ -4,7 +4,7 @@ import com.example.demopost.data.enity.Like;
 import com.example.demopost.data.enity.PostTopic;
 import com.example.demopost.data.request.PostRequest;
 import com.example.demopost.data.response.PostResponse;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.example.demopost.data.response.PostShareResponse;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,5 +25,5 @@ public interface IPostService {
 
   void increaseLikes(Long id , Like like); // method tang like bai post
 
-  PostTopic increaseShare(Long id , Like like,PostRequest postRequest); // method tang share cho bai post
+  PostShareResponse increaseShare(Long id , Like like, PostRequest postRequest); // method tang share cho bai post
 }

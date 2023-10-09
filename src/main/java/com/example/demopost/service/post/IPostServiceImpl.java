@@ -1,10 +1,12 @@
 package com.example.demopost.service.post;
 
-import com.example.demopost.convert.UserConvert;
+import com.example.demopost.convert.PosTopicConvert;
+import com.example.demopost.convert.PostShareConvert;
 import com.example.demopost.data.enity.Like;
 import com.example.demopost.data.enity.PostTopic;
 import com.example.demopost.data.request.PostRequest;
 import com.example.demopost.data.response.PostResponse;
+import com.example.demopost.data.response.PostShareResponse;
 import com.example.demopost.exception.InternalServerException;
 import com.example.demopost.exception.NotFoundException;
 import com.example.demopost.repository.ILikeRepository;
@@ -25,15 +27,17 @@ public class IPostServiceImpl implements IPostService {
 
   private final ILikeRepository iLikeRepository;
 
-  private final UserConvert userConvert;
+  private final PosTopicConvert userConvert;
 
+  private final PostShareConvert postShareConvert;
 
   @Autowired
   public IPostServiceImpl(IPostRepository iPostRepository, ILikeRepository iLikeRepository,
-      UserConvert userConvert) {
+      PosTopicConvert userConvert, PostShareConvert postShareConvert) {
     this.iPostRepository = iPostRepository;
     this.iLikeRepository = iLikeRepository;
     this.userConvert = userConvert;
+    this.postShareConvert = postShareConvert;
   }
 
   @Override
@@ -131,7 +135,7 @@ public class IPostServiceImpl implements IPostService {
   }
 
   @Override
-  public PostTopic increaseShare(Long id, Like like, PostRequest postRequest) {
+  public PostShareResponse increaseShare(Long id, Like like, PostRequest postRequest ) {
 
     Optional<Like> optionalShare = iLikeRepository.findById(id); // tim id bai post_id trong like
     if (optionalShare.isPresent()) {
@@ -140,29 +144,41 @@ public class IPostServiceImpl implements IPostService {
       Optional<PostTopic> optionalPostTopicShare = iPostRepository.findById(id);
       PostTopic sharePostTopic = optionalPostTopicShare.get();
 
-      // tao 1 bai viet moi
-      PostTopic postTopic = new PostTopic();
-      postTopic.setTitle(postRequest.getTitle());
-      postTopic.setImageUrl(sharePostTopic.getImageUrl());
-      postTopic.setDateTime(LocalDateTime.now());
-      postTopic.setUpdateTime(LocalDateTime.now());
-      share.setDateShare(LocalDateTime.now());
-      share.setShare(share.getShare() + 1); // tang share topic goc len 1
+      // lay bai viet goc ra tu postResponse
+      PostResponse response = new PostResponse();
+      response.setId(sharePostTopic.getId());
+      response.setDateTime(sharePostTopic.getDateTime());
+      response.setTitle(sharePostTopic.getTitle());
+      response.setContent(sharePostTopic.getContent());
+      response.setImageUrl(sharePostTopic.getImageUrl());
+      response.setLike(sharePostTopic.getLikes().get(0).getLike());
+      response.setShare(sharePostTopic.getLikes().get(0).getShare());
 
-      // tao like tuong ung
+      // long vao object goc vao object chia se
+      PostTopic topic = new PostTopic();
+      topic.setTitle(postRequest.getTitle());
+      topic.setContent(String.valueOf(response));
+      topic.setImageUrl(postRequest.getImageUrl());
+      topic.setDateTime(LocalDateTime.now());
+      // tang share bai viet goc
+      share.setDateShare(LocalDateTime.now());
+      share.setShare(share.getShare()+1);
+
       Like like1 = new Like();
       like1.setLike(0);
-      like1.setPostTopic(postTopic);
-      // tao share tuong ung
+      like1.setPostTopic(topic);
       Like share1 = new Like();
       share1.setShare(0);
-      share1.setPostTopic(postTopic);
-      // add like anh share
-      List<Like> share2 = new ArrayList<>();
-      share2.add(like1);
-      share2.add(share1);
-      postTopic.setLikes(share2);
-      return iPostRepository.save(postTopic);
+      share1.setPostTopic(topic);
+
+      List<Like> likeList = new ArrayList<>();
+      likeList.add(like1);
+      likeList.add(share1);
+      topic.setLikes(likeList);
+      //
+      iPostRepository.save(topic);
+
+      return postShareConvert.shareResponse(topic);
     } else {
       throw new NotFoundException("no id topic");
     }
