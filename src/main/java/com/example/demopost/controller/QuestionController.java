@@ -20,43 +20,50 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/home/CauHoi")
 public class QuestionController {
 
-    private final IQuestionService iQuestionService;
+  private final IQuestionService iQuestionService;
 
-    @Autowired
-    public QuestionController(IQuestionService iQuestionService) {
-        this.iQuestionService = iQuestionService;
-    }
+  @Autowired
+  public QuestionController(IQuestionService iQuestionService) {
+    this.iQuestionService = iQuestionService;
+  }
 
-    @PostMapping("/question")
-    public ResponseEntity<?> createQuestion(@RequestBody QuestionRequest question) {
-        return ResponseEntity.ok(iQuestionService.createQuestion(question));
-    }
+  @PostMapping("/question")
+  public ResponseEntity<?> createQuestion(@RequestBody QuestionRequest question) {
+    return ResponseEntity.ok(iQuestionService.createQuestion(question));
+  }
 
-    @GetMapping("/all")
-    public ResponseEntity<?> finAllQuestion() {
-        return ResponseEntity.ok(iQuestionService.finAllQuestion());
-    }
+  @GetMapping("/all")
+  public ResponseEntity<?> finAllQuestion() {
+    return ResponseEntity.ok(iQuestionService.finAllQuestion());
+  }
 
-    @GetMapping("/id")
-    public ResponseEntity<?> searchId(@RequestParam long id) {
-        return ResponseEntity.ok(iQuestionService.searchId(id));
-    }
+  @GetMapping("/id")
+  public ResponseEntity<?> searchId(@RequestParam long id) {
+    return ResponseEntity.ok(iQuestionService.searchId(id));
+  }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteById(@RequestParam Long id) {
-        iQuestionService.deleteById(id);
-        return ResponseEntity.ok("delete successful question id : " + id);
-    }
+  @DeleteMapping("/delete")
+  public ResponseEntity<?> deleteById(@RequestParam Long id) {
+    iQuestionService.deleteById(id);
+    return ResponseEntity.ok("delete successful question id : " + id);
+  }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateById(@PathVariable Long id,
-                                        @RequestBody QuestionRequest questionRequest) {
-        iQuestionService.updateById(id, questionRequest);
-        return ResponseEntity.ok("update successful");
-    }
-    @PutMapping("/like/{question_id}")
-    public ResponseEntity<?> increaseLike(@PathVariable("question_id") Long id , LikeQuestion likeQuestion){
-        iQuestionService.increaseLike(id,likeQuestion);
-        return ResponseEntity.ok("like successful");
-    }
+  @PutMapping("/update/{id}")
+  public ResponseEntity<?> updateById(@PathVariable Long id,
+      @RequestBody QuestionRequest questionRequest) {
+    iQuestionService.updateById(id, questionRequest);
+    return ResponseEntity.ok("update successful");
+  }
+
+  @PutMapping("/like/{question_id}")
+  public ResponseEntity<?> increaseLike(@PathVariable("question_id") Long id,
+      LikeQuestion likeQuestion) {
+    iQuestionService.increaseLike(id, likeQuestion);
+    return ResponseEntity.ok("like successful");
+  }
+
+  @GetMapping("/News")
+  public ResponseEntity<?> setNewsQuestion() {
+    return ResponseEntity.ok(iQuestionService.setNewsQuestion());
+  }
 }

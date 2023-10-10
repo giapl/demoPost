@@ -110,4 +110,12 @@ public class IQuestionServiceImpl implements IQuestionService {
       throw  new NotFoundException("no question_id");
     }
   }
+
+  @Override
+  public List<QuestionResponse> setNewsQuestion() {
+    return iQuestionRepository.findAllByIdOrderBy()
+        .stream()
+        .map(questionConvert::ConvertEntityQuestion)
+        .collect(Collectors.toList());
+  }
 }

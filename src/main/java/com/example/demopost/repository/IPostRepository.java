@@ -27,4 +27,12 @@ public interface IPostRepository extends JpaRepository<PostTopic, Long> {
   @Query(value = "select * from topic where id = :id", nativeQuery = true)
   Optional<PostTopic> findById(@Param("id") Long id);
 
+  // jpa lay bai viet theo so like
+  @Query(value =
+      "select topic.id , topic.create_at , topic.title , topic.content , topic.image , topic.update_at, like_post.like_count , like_post.share "
+          + "from topic "
+          + "left join like_post "
+          + "on topic.id = like_post.post_id "
+          + "order by like_post.like_count desc", nativeQuery = true)
+  List<PostTopic> findAllByOrderByLikesDesc();
 }

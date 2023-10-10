@@ -41,7 +41,10 @@ public class IHomeServiceImpl implements IHomeService {
 
   @Override
   public List<PostResponse> setOutstanding() {
-    return null;
+    return iPostRepository.findAllByOrderByLikesDesc()
+        .stream()
+        .map(userConvert::convertEntityToDo)
+        .collect(Collectors.toList());
   }
 
   @Override

@@ -17,4 +17,7 @@ public interface IQuestionRepository extends JpaRepository<Question, Long> {
   @Query(value = "select * from question where id = :id", nativeQuery = true)
   Optional<Question> searchById(@Param("id") long id);
 
+  //jpa lay question theo id
+  @Query(value = "select * from question order by id desc ", nativeQuery = true)
+  List<Question> findAllByIdOrderBy();
 }

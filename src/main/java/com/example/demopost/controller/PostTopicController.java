@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/home/ChoBan")
-public class PostController {
+public class PostTopicController {
 
   private IPostService iPostService;
 
   @Autowired
-  public PostController(IPostService iPostService) {
+  public PostTopicController(IPostService iPostService) {
     this.iPostService = iPostService;
   }
 
