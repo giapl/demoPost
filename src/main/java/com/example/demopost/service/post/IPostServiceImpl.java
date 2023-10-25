@@ -2,7 +2,7 @@ package com.example.demopost.service.post;
 
 import com.example.demopost.convert.PosTopicConvert;
 import com.example.demopost.convert.PostShareConvert;
-import com.example.demopost.data.enity.Like;
+import com.example.demopost.data.enity.LikePostTopic;
 import com.example.demopost.data.enity.PostTopic;
 import com.example.demopost.data.request.PostRequest;
 import com.example.demopost.data.response.PostResponse;
@@ -49,17 +49,17 @@ public class IPostServiceImpl implements IPostService {
     topic.setImageUrl(post.getImageUrl());
     topic.setUpdateTime(LocalDateTime.now());
     // like tuong ung
-    Like like1 = new Like();
+    LikePostTopic like1 = new LikePostTopic();
     like1.setLike(0);
     like1.setPostTopic(topic);
-    List<Like> like = new ArrayList<>();
+    List<LikePostTopic> like = new ArrayList<>();
     like.add(like1);
     topic.setLikes(like);
     // share tuong ung
-    Like share1 = new Like();
+    LikePostTopic share1 = new LikePostTopic();
     share1.setShare(0);
     share1.setPostTopic(topic);
-    List<Like> share = new ArrayList<>();
+    List<LikePostTopic> share = new ArrayList<>();
     share.add(share1);
     topic.setLikes(share);
     try {
@@ -122,10 +122,10 @@ public class IPostServiceImpl implements IPostService {
   }
 
   @Override
-  public void increaseLikes(Long id, Like like) {
-    Optional<Like> optionalLike = iLikeRepository.findById(id);
+  public void increaseLikes(Long id, LikePostTopic like) {
+    Optional<LikePostTopic> optionalLike = iLikeRepository.findById(id);
     if (optionalLike.isPresent()) {
-      Like like1 = optionalLike.get();
+      LikePostTopic like1 = optionalLike.get();
       like1.setLike(like1.getLike() + 1); // tang like len 1 like khi tim dc pót_id
       like1.setDateLike(LocalDateTime.now());
       iLikeRepository.save(like1);
@@ -135,11 +135,11 @@ public class IPostServiceImpl implements IPostService {
   }
 
   @Override
-  public PostShareResponse increaseShare(Long id, Like like, PostRequest postRequest ) {
+  public PostShareResponse increaseShare(Long id, LikePostTopic like, PostRequest postRequest ) {
 
-    Optional<Like> optionalShare = iLikeRepository.findById(id); // tim id bai post_id trong like
+    Optional<LikePostTopic> optionalShare = iLikeRepository.findById(id); // tim id bai post_id trong like
     if (optionalShare.isPresent()) {
-      Like share = optionalShare.get(); // lay share
+      LikePostTopic share = optionalShare.get(); // lay share
       // tim bai viet goc
       Optional<PostTopic> optionalPostTopicShare = iPostRepository.findById(id);
       PostTopic sharePostTopic = optionalPostTopicShare.get();
@@ -164,14 +164,14 @@ public class IPostServiceImpl implements IPostService {
       share.setDateShare(LocalDateTime.now());
       share.setShare(share.getShare()+1);
 
-      Like like1 = new Like();
+      LikePostTopic like1 = new LikePostTopic();
       like1.setLike(0);
       like1.setPostTopic(topic);
-      Like share1 = new Like();
+      LikePostTopic share1 = new LikePostTopic();
       share1.setShare(0);
       share1.setPostTopic(topic);
 
-      List<Like> likeList = new ArrayList<>();
+      List<LikePostTopic> likeList = new ArrayList<>();
       likeList.add(like1);
       likeList.add(share1);
       topic.setLikes(likeList);

@@ -2,6 +2,8 @@ package com.example.demopost.controller;
 
 
 import com.example.demopost.data.enity.LikeQuestion;
+import com.example.demopost.data.enity.Question;
+import com.example.demopost.data.request.CommentQuestionRequest;
 import com.example.demopost.data.request.QuestionRequest;
 import com.example.demopost.service.Question.IQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,5 +67,10 @@ public class QuestionController {
   @GetMapping("/News")
   public ResponseEntity<?> setNewsQuestion() {
     return ResponseEntity.ok(iQuestionService.setNewsQuestion());
+  }
+  @PutMapping("/comment/{question_id}")
+  public ResponseEntity<?> createComment(@PathVariable("question_id") Long id , Question question , @RequestBody CommentQuestionRequest commentQuestionRequest){
+    iQuestionService.createComment(id , question , commentQuestionRequest);
+    return ResponseEntity.ok("comment successful");
   }
 }

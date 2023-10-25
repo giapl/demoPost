@@ -1,6 +1,6 @@
 package com.example.demopost.controller;
 
-import com.example.demopost.data.enity.Like;
+import com.example.demopost.data.enity.LikePostTopic;
 import com.example.demopost.data.request.PostRequest;
 import com.example.demopost.service.post.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,12 +60,12 @@ public class PostTopicController {
   }
 
   @PutMapping("/like/{post_id}")
-  public ResponseEntity<?> increaseLike(@PathVariable("post_id") Long id, Like like) {
+  public ResponseEntity<?> increaseLike(@PathVariable("post_id") Long id, LikePostTopic like) {
     iPostService.increaseLikes(id, like);
     return ResponseEntity.ok("like postTopic successful");
   }
   @PostMapping("/share/{post_id}/{id}")
-  public ResponseEntity<?> increaseShare(@PathVariable("post_id") Long id , Like like , @RequestBody PostRequest postRequest) {
+  public ResponseEntity<?> increaseShare(@PathVariable("post_id") Long id , LikePostTopic like , @RequestBody PostRequest postRequest) {
     iPostService.increaseShare(id , like , postRequest);
     return ResponseEntity.ok("share");
   }

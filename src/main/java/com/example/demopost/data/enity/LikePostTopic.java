@@ -23,7 +23,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @NoArgsConstructor
 @Entity
 @Table(name = "like_post")
-public class Like {
+public class LikePostTopic {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

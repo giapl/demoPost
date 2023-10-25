@@ -44,5 +44,5 @@ public class PostTopic {
 
   @JsonManagedReference
   @OneToMany(mappedBy = "postTopic", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<Like> likes = new ArrayList<>();
+  private List<LikePostTopic> likes = new ArrayList<>();
 }
