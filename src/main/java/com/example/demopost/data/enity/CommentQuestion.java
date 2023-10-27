@@ -28,10 +28,19 @@ public class CommentQuestion {
   @Id
   @Column(name = "id")
   private long id;
-  @Column(name = "comment_count")
-  private long comment;
+
+  @Column(name = "question_id")
+  private long questionId;
+
   @Column(name = "content")
   private String content;
+
+
+
+
+  @Column(name = "comment")
+  private long comment;
+
   @Column(name = "image")
   private String imageUrl;
   @Column(name = "create_at")
@@ -40,9 +49,9 @@ public class CommentQuestion {
   private LocalDateTime updateTime;
 
 
-  @JsonBackReference
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "question_id")
-  private Question question;
+//  @JsonBackReference
+//  @ManyToOne(fetch = FetchType.LAZY)
+//  @JoinColumn(name = "question_id")
+//  private Question question;
 
 }

@@ -13,6 +13,6 @@ public class QuestionResponse {
   private String content;
   private String imageUrl;
   private long like;
-  private long comment;
-  private List<CommentQuestion> commentQuestions;
+  private long numComment;
+  private List<CommentQuestionResponse> commentQuestions;
 }

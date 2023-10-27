@@ -29,14 +29,19 @@ public class Question {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private long id;
-  @Column(name = "create_at")
-  private LocalDateTime date;
+
   @Column(name = "content")
   private String content;
+
+
+
+
   @Column(name = "image_url")
   private String imageUrl;
   @Column(name = "update_at")
   private LocalDateTime updateTime;
+  @Column(name = "create_at")
+  private LocalDateTime date;
 
   @JsonManagedReference
   @OneToMany(mappedBy = "questions", cascade = CascadeType.ALL, orphanRemoval = true)

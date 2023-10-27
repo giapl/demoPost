@@ -13,7 +13,7 @@ services:
     volumes:
       - database_mysql:/var/lib/docker/volumes/database_mysql/_data
   noron_app:
-    image: app_noron
+    image: app_noron:lastest
     container_name: BE_app
     ports:
       - "8080:8080"
