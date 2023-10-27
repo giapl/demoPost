@@ -68,9 +68,11 @@ public class QuestionController {
   public ResponseEntity<?> setNewsQuestion() {
     return ResponseEntity.ok(iQuestionService.setNewsQuestion());
   }
-  @PutMapping("/comment/{question_id}")
-  public ResponseEntity<?> createComment(@PathVariable("question_id") Long id , Question question , @RequestBody CommentQuestionRequest commentQuestionRequest){
-    iQuestionService.createComment(id , question , commentQuestionRequest);
+
+  @PostMapping("/comment/{question_id}")
+  public ResponseEntity<?> createComment(@PathVariable("question_id") Long id, Question question,
+      @RequestBody CommentQuestionRequest commentQuestionRequest) {
+    iQuestionService.createComment(id, question, commentQuestionRequest);
     return ResponseEntity.ok("comment successful");
   }
 }
