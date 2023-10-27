@@ -87,10 +87,16 @@ public class IQuestionServiceImpl implements IQuestionService {
 
 
   @Override
-  public Optional<QuestionResponse> searchId(long id) {
+  public QuestionResponse searchId(long id) {
     Optional<Question> questionOptional = iQuestionRepository.searchById(id);
+
+    List<CommentQuestion> commentsInQuestion = iCommentQuestionRepository.findCommentQuestionsByQuestionId(id);
+    // mapper CommentQuestion -> CommentQuestionResponse
     if (questionOptional.isPresent()) {
-      return Optional.of(questionConvert.ConvertEntityQuestion(questionOptional.get()));
+      QuestionResponse questionResponse = questionConvert.ConvertEntityQuestion(questionOptional.get());
+//              questionResponse.setCommentQuestions(commentsInQuestion);
+      questionResponse.setNumComment(commentsInQuestion.size());
+      return questionResponse;
     } else {
       throw new NotFoundException("no id database");
     }

@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class CommentQuestionRequest {
 
+  private Long questionId;
   private String content;
   private String imageUrl;
 
