@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PostShareConvert {
 
-  private ModelMapper modelMapper;
+  private final ModelMapper modelMapper;
 
   @Autowired
   public PostShareConvert(ModelMapper modelMapper) {

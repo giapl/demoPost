@@ -1,11 +1,13 @@
 package com.example.demopost.service.Question;
 
+import com.example.demopost.convert.CommentQuestionConvert;
 import com.example.demopost.convert.QuestionConvert;
 import com.example.demopost.data.enity.CommentQuestion;
 import com.example.demopost.data.enity.LikeQuestion;
 import com.example.demopost.data.enity.Question;
 import com.example.demopost.data.request.CommentQuestionRequest;
 import com.example.demopost.data.request.QuestionRequest;
+import com.example.demopost.data.response.CommentQuestionResponse;
 import com.example.demopost.data.response.QuestionResponse;
 import com.example.demopost.exception.NotFoundException;
 import com.example.demopost.repository.ICommentQuestionRepository;
@@ -22,22 +24,27 @@ import org.springframework.stereotype.Service;
 @Service
 public class IQuestionServiceImpl implements IQuestionService {
 
-  private IQuestionRepository iQuestionRepository;
+  private final IQuestionRepository iQuestionRepository;
 
-  private QuestionConvert questionConvert;
+  private final QuestionConvert questionConvert;
 
-  private ILikeQuestionRepository iLikeQuestionRepository;
+  private final ILikeQuestionRepository iLikeQuestionRepository;
 
-  private ICommentQuestionRepository iCommentQuestionRepository;
+
+  private final ICommentQuestionRepository iCommentQuestionRepository;
+
+  private final CommentQuestionConvert commentQuestionConvert;
 
   @Autowired
   public IQuestionServiceImpl(IQuestionRepository iQuestionRepository,
       QuestionConvert questionConvert, ILikeQuestionRepository iLikeQuestionRepository,
-      ICommentQuestionRepository iCommentQuestionRepository) {
+      ICommentQuestionRepository iCommentQuestionRepository,
+      CommentQuestionConvert commentQuestionConvert) {
     this.iQuestionRepository = iQuestionRepository;
     this.questionConvert = questionConvert;
     this.iLikeQuestionRepository = iLikeQuestionRepository;
     this.iCommentQuestionRepository = iCommentQuestionRepository;
+    this.commentQuestionConvert = commentQuestionConvert;
   }
 
 
@@ -67,10 +74,9 @@ public class IQuestionServiceImpl implements IQuestionService {
     List<CommentQuestion> comment = new ArrayList<>();
     comment.add(commentQuestion);
     question1.setCommentQuestions(comment);
-*/
+    */
     return iQuestionRepository.save(question1);
   }
-
 
 
   @Override
@@ -133,13 +139,12 @@ public class IQuestionServiceImpl implements IQuestionService {
   }
 
   @Override
-  public CommentQuestion createComment(Long id, Question question,
+  public CommentQuestionResponse createComment(Long id, Question question,
       CommentQuestionRequest commentQuestionRequest) {
 
     Optional<Question> optionalQuestion = iQuestionRepository.findById(id);
     if (optionalQuestion.isPresent()) {
       Question question1 = optionalQuestion.get();
-
       CommentQuestion commentQuestion = new CommentQuestion();
       commentQuestion.setContent(commentQuestionRequest.getContent());
       commentQuestion.setImageUrl(commentQuestionRequest.getImageUrl());
@@ -147,12 +152,11 @@ public class IQuestionServiceImpl implements IQuestionService {
       commentQuestion.setUpdateTime(LocalDateTime.now());
       commentQuestion.setQuestion(question1);
 
-
       question1.getCommentQuestions().add(commentQuestion); // add comment vao question
       iQuestionRepository.save(question1);
-      return commentQuestion;
-    }
-    else {
+
+      return commentQuestionConvert.commentQuestionResponse(commentQuestion);
+    } else {
       throw new NotFoundException("no id");
     }
   }

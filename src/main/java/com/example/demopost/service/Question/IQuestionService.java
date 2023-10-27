@@ -1,11 +1,11 @@
 package com.example.demopost.service.Question;
 
 
-import com.example.demopost.data.enity.CommentQuestion;
 import com.example.demopost.data.enity.LikeQuestion;
 import com.example.demopost.data.enity.Question;
 import com.example.demopost.data.request.CommentQuestionRequest;
 import com.example.demopost.data.request.QuestionRequest;
+import com.example.demopost.data.response.CommentQuestionResponse;
 import com.example.demopost.data.response.QuestionResponse;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +26,7 @@ public interface IQuestionService {
 
   List<QuestionResponse> setNewsQuestion(); // method lay question moi theo id
 
-  CommentQuestion createComment(Long id, Question question,
+  CommentQuestionResponse createComment(Long id, Question question,
       CommentQuestionRequest commentQuestionRequest); // method tao tra loi cap 1
 
 
