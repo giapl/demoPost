@@ -1,6 +1,5 @@
-package com.example.demopost.service;
+package com.example.demopost.service.comment;
 
-import com.example.demopost.data.enity.Question;
 import com.example.demopost.data.request.CommentQuestionRequest;
 import com.example.demopost.data.response.CommentQuestionResponse;
 

@@ -28,12 +28,9 @@ public class Question {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
-  private long id;
-
+  private Long id;
   @Column(name = "content")
   private String content;
-
-
 
 
   @Column(name = "image_url")
@@ -47,7 +44,4 @@ public class Question {
   @OneToMany(mappedBy = "questions", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<LikeQuestion> likeQuestions = new ArrayList<>();
 
-  @JsonManagedReference
-  @OneToMany(mappedBy = "question" , cascade = CascadeType.ALL , orphanRemoval = true)
-  private List<CommentQuestion> commentQuestions = new ArrayList<>();
 }

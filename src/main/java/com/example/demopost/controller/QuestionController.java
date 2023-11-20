@@ -1,11 +1,9 @@
 package com.example.demopost.controller;
 
-
 import com.example.demopost.data.enity.LikeQuestion;
-import com.example.demopost.data.enity.Question;
-import com.example.demopost.data.request.CommentQuestionRequest;
 import com.example.demopost.data.request.QuestionRequest;
 import com.example.demopost.service.Question.IQuestionService;
+import com.example.demopost.service.comment.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,9 +22,12 @@ public class QuestionController {
 
   private final IQuestionService iQuestionService;
 
+  private final ICommentService iCommentService;
+
   @Autowired
-  public QuestionController(IQuestionService iQuestionService) {
+  public QuestionController(IQuestionService iQuestionService, ICommentService iCommentService) {
     this.iQuestionService = iQuestionService;
+    this.iCommentService = iCommentService;
   }
 
   @PostMapping("/question")
@@ -68,13 +69,5 @@ public class QuestionController {
   public ResponseEntity<?> setNewsQuestion() {
     return ResponseEntity.ok(iQuestionService.setNewsQuestion());
   }
-
-  @PostMapping("/comment/{question_id}")
-  public ResponseEntity<?> createComment(@PathVariable("question_id") Long id, Question question,
-      @RequestBody CommentQuestionRequest commentQuestionRequest) {
-    iQuestionService.createComment(id, question, commentQuestionRequest);
-    return ResponseEntity.ok("comment successful");
-  }
-
 
 }

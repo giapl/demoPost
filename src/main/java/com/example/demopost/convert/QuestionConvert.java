@@ -16,12 +16,10 @@ public class QuestionConvert {
 
   public QuestionResponse ConvertEntityQuestion(Question question) {
     QuestionResponse questionResponse = modelMapper.map(question, QuestionResponse.class);
-    if (!question.getLikeQuestions().isEmpty() && !question.getCommentQuestions().isEmpty()) {
+    if (!question.getLikeQuestions().isEmpty()) {
       questionResponse.setLike(question.getLikeQuestions().get(0).getLike());
-      questionResponse.setComment(question.getCommentQuestions().get(0).getComment());
     } else {
       questionResponse.setLike(0);
-      questionResponse.setComment(0);
     }
 
     return questionResponse;

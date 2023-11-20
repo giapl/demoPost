@@ -1,7 +1,7 @@
 package com.example.demopost.controller;
 
 import com.example.demopost.data.request.CommentQuestionRequest;
-import com.example.demopost.service.ICommentService;
+import com.example.demopost.service.comment.ICommentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

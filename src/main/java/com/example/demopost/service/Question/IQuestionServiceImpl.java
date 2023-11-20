@@ -5,11 +5,11 @@ import com.example.demopost.convert.QuestionConvert;
 import com.example.demopost.data.enity.CommentQuestion;
 import com.example.demopost.data.enity.LikeQuestion;
 import com.example.demopost.data.enity.Question;
-import com.example.demopost.data.request.CommentQuestionRequest;
 import com.example.demopost.data.request.QuestionRequest;
 import com.example.demopost.data.response.CommentQuestionResponse;
 import com.example.demopost.data.response.QuestionResponse;
 import com.example.demopost.exception.NotFoundException;
+import com.example.demopost.mapper.IComment;
 import com.example.demopost.repository.ICommentQuestionRepository;
 import com.example.demopost.repository.ILikeQuestionRepository;
 import com.example.demopost.repository.IQuestionRepository;
@@ -35,16 +35,19 @@ public class IQuestionServiceImpl implements IQuestionService {
 
   private final CommentQuestionConvert commentQuestionConvert;
 
+  private final IComment iComment;
+
   @Autowired
   public IQuestionServiceImpl(IQuestionRepository iQuestionRepository,
       QuestionConvert questionConvert, ILikeQuestionRepository iLikeQuestionRepository,
       ICommentQuestionRepository iCommentQuestionRepository,
-      CommentQuestionConvert commentQuestionConvert) {
+      CommentQuestionConvert commentQuestionConvert, IComment iComment) {
     this.iQuestionRepository = iQuestionRepository;
     this.questionConvert = questionConvert;
     this.iLikeQuestionRepository = iLikeQuestionRepository;
     this.iCommentQuestionRepository = iCommentQuestionRepository;
     this.commentQuestionConvert = commentQuestionConvert;
+    this.iComment = iComment;
   }
 
 
@@ -85,18 +88,24 @@ public class IQuestionServiceImpl implements IQuestionService {
         .collect(Collectors.toList());
   }
 
-
   @Override
-  public QuestionResponse searchId(long id) {
+  public Optional<QuestionResponse> searchId(long id) {
     Optional<Question> questionOptional = iQuestionRepository.searchById(id);
-
-    List<CommentQuestion> commentsInQuestion = iCommentQuestionRepository.findCommentQuestionsByQuestionId(id);
+    // List<CommentQuestion> commentsInQuestion = iCommentQuestionRepository.findCommentQuestionsByQuestionId(id);
+    List<CommentQuestion> commentQuestions = iCommentQuestionRepository.findCommentQuestionsByQuestionId(
+        id);
     // mapper CommentQuestion -> CommentQuestionResponse
+    List<CommentQuestionResponse> commentQuestionResponses = iComment.convertEntityCommentMapper(
+        commentQuestions);
+
     if (questionOptional.isPresent()) {
-      QuestionResponse questionResponse = questionConvert.ConvertEntityQuestion(questionOptional.get());
-//              questionResponse.setCommentQuestions(commentsInQuestion);
-      questionResponse.setNumComment(commentsInQuestion.size());
-      return questionResponse;
+      QuestionResponse questionResponse = questionConvert.ConvertEntityQuestion(
+          questionOptional.get());
+      // questionResponse.setCommentQuestions(commentsInQuestion);
+      questionResponse.setCommentQuestions(commentQuestionResponses);
+      //questionResponse.setNumComment(commentsInQuestion.size());
+      questionResponse.setNumComment(commentQuestions.size());
+      return Optional.of(questionResponse);
     } else {
       throw new NotFoundException("no id database");
     }
@@ -144,27 +153,5 @@ public class IQuestionServiceImpl implements IQuestionService {
         .map(questionConvert::ConvertEntityQuestion).collect(Collectors.toList());
   }
 
-  @Override
-  public CommentQuestionResponse createComment(Long id, Question question,
-      CommentQuestionRequest commentQuestionRequest) {
-
-    Optional<Question> optionalQuestion = iQuestionRepository.findById(id);
-    if (optionalQuestion.isPresent()) {
-      Question question1 = optionalQuestion.get();
-      CommentQuestion commentQuestion = new CommentQuestion();
-      commentQuestion.setContent(commentQuestionRequest.getContent());
-      commentQuestion.setImageUrl(commentQuestionRequest.getImageUrl());
-      commentQuestion.setDateTime(LocalDateTime.now());
-      commentQuestion.setUpdateTime(LocalDateTime.now());
-      commentQuestion.setQuestion(question1);
-
-      question1.getCommentQuestions().add(commentQuestion); // add comment vao question
-      iQuestionRepository.save(question1);
-
-      return commentQuestionConvert.commentQuestionResponse(commentQuestion);
-    } else {
-      throw new NotFoundException("no id");
-    }
-  }
 
 }
