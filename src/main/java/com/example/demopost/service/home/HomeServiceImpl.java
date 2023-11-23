@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IHomeServiceImpl implements IHomeService {
+public class HomeServiceImpl implements IHomeService {
 
   private IPostRepository iPostRepository;
   private IQuestionRepository iQuestionRepository;
@@ -22,7 +22,7 @@ public class IHomeServiceImpl implements IHomeService {
   private QuestionConvert questionConvert;
 
   @Autowired
-  public IHomeServiceImpl(IPostRepository iPostRepository,
+  public HomeServiceImpl(IPostRepository iPostRepository,
       IQuestionRepository iQuestionRepository, PosTopicConvert userConvert,
       QuestionConvert questionConvert) {
     this.iPostRepository = iPostRepository;

@@ -4,6 +4,7 @@ import com.example.demopost.data.enity.LikePostTopic;
 import com.example.demopost.data.request.PostRequest;
 import com.example.demopost.service.post.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/home/ChoBan")
+@RequestMapping("/api/v1/postTopics")
 public class PostTopicController {
 
   private IPostService iPostService;
@@ -29,7 +30,7 @@ public class PostTopicController {
   @PostMapping("/topic")
   public ResponseEntity<?> createTopic(@RequestBody PostRequest post) {
     iPostService.createTopic(post);
-    return ResponseEntity.ok("successful topic");
+    return ResponseEntity.status(HttpStatus.CREATED).body("successful created new a topic");
   }
 
   @GetMapping("/all")
@@ -42,13 +43,13 @@ public class PostTopicController {
     return ResponseEntity.ok(iPostService.searchByTitle(title));
   }
 
-  @GetMapping("/search/id")
-  public ResponseEntity<?> searchById(@RequestParam long id) {
+  @GetMapping("/search/{id}")
+  public ResponseEntity<?> searchById(@PathVariable long id) {
     return ResponseEntity.ok(iPostService.searchById(id));
   }
 
-  @DeleteMapping("/delete")
-  public ResponseEntity<?> deleteById(@RequestParam Long id) {
+  @DeleteMapping("/delete/{id}")
+  public ResponseEntity<?> deleteById(@PathVariable Long id) {
     iPostService.deleteById(id);
     return ResponseEntity.ok("delete successful postTopic id : " + id);
   }
@@ -64,9 +65,5 @@ public class PostTopicController {
     iPostService.increaseLikes(id, like);
     return ResponseEntity.ok("like postTopic successful");
   }
-  @PostMapping("/share/{post_id}/{id}")
-  public ResponseEntity<?> increaseShare(@PathVariable("post_id") Long id , LikePostTopic like , @RequestBody PostRequest postRequest) {
-    iPostService.increaseShare(id , like , postRequest);
-    return ResponseEntity.ok("share");
-  }
+
 }

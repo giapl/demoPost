@@ -21,7 +21,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IPostServiceImpl implements IPostService {
+public class PostServiceImpl implements IPostService {
 
   private final IPostRepository iPostRepository;
 
@@ -32,7 +32,7 @@ public class IPostServiceImpl implements IPostService {
   private final PostShareConvert postShareConvert;
 
   @Autowired
-  public IPostServiceImpl(IPostRepository iPostRepository, ILikeRepository iLikeRepository,
+  public PostServiceImpl(IPostRepository iPostRepository, ILikeRepository iLikeRepository,
       PosTopicConvert userConvert, PostShareConvert postShareConvert) {
     this.iPostRepository = iPostRepository;
     this.iLikeRepository = iLikeRepository;

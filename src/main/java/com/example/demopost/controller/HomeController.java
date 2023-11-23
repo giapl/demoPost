@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/home")
+@RequestMapping("/api/v1/homes")
 public class HomeController {
 
   private final IHomeService iHomeService;
@@ -19,22 +19,22 @@ public class HomeController {
     this.iHomeService = iHomeService;
   }
 
-  @GetMapping("/NoiBat")
+  @GetMapping("/outstanding")
   public ResponseEntity<?> setOutstanding() {
     return ResponseEntity.ok(iHomeService.setOutstanding());
   }
 
-  @GetMapping("News")
+  @GetMapping("/news")
   public ResponseEntity<?> setNews() {
     return ResponseEntity.ok(iHomeService.setNews());
   }
 
-  @GetMapping("/CauHoi")
+  @GetMapping("/question")
   public ResponseEntity<?> setQuestions() {
     return ResponseEntity.ok(iHomeService.setQuestions());
   }
 
-  @GetMapping("/ChoBan")
+  @GetMapping("/choBan")
   public ResponseEntity<?> getChoBan() {
     return ResponseEntity.ok(iHomeService.getChoBan());
   }

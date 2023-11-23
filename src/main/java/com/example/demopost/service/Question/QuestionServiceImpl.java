@@ -1,6 +1,5 @@
 package com.example.demopost.service.Question;
 
-import com.example.demopost.convert.CommentQuestionConvert;
 import com.example.demopost.convert.QuestionConvert;
 import com.example.demopost.data.enity.CommentQuestion;
 import com.example.demopost.data.enity.LikeQuestion;
@@ -22,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IQuestionServiceImpl implements IQuestionService {
+public class QuestionServiceImpl implements IQuestionService {
 
   private final IQuestionRepository iQuestionRepository;
 
@@ -30,23 +29,18 @@ public class IQuestionServiceImpl implements IQuestionService {
 
   private final ILikeQuestionRepository iLikeQuestionRepository;
 
-
   private final ICommentQuestionRepository iCommentQuestionRepository;
-
-  private final CommentQuestionConvert commentQuestionConvert;
 
   private final IComment iComment;
 
   @Autowired
-  public IQuestionServiceImpl(IQuestionRepository iQuestionRepository,
+  public QuestionServiceImpl(IQuestionRepository iQuestionRepository,
       QuestionConvert questionConvert, ILikeQuestionRepository iLikeQuestionRepository,
-      ICommentQuestionRepository iCommentQuestionRepository,
-      CommentQuestionConvert commentQuestionConvert, IComment iComment) {
+      ICommentQuestionRepository iCommentQuestionRepository, IComment iComment) {
     this.iQuestionRepository = iQuestionRepository;
     this.questionConvert = questionConvert;
     this.iLikeQuestionRepository = iLikeQuestionRepository;
     this.iCommentQuestionRepository = iCommentQuestionRepository;
-    this.commentQuestionConvert = commentQuestionConvert;
     this.iComment = iComment;
   }
 
