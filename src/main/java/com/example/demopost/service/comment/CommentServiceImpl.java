@@ -45,7 +45,7 @@ public class CommentServiceImpl implements ICommentService {
        CommentQuestion commentQuestion = comment.convertEntityComment(commentQuestionRequest);
         commentQuestion.setQuestionId(questionById.get().getId());
         commentQuestion.setContent(commentQuestionRequest.getContent());
-        commentQuestion.setImageUrl(commentQuestion.getImageUrl());
+        commentQuestion.setImageUrl(commentQuestionRequest.getImageUrl());
         commentQuestion.setDateTime(LocalDateTime.now());
         commentQuestion.setUpdateTime(LocalDateTime.now());
         // b2: save  CommentQuestion commentSaved = commentQuestionRepository.save();
