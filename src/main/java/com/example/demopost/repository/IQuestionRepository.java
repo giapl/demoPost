@@ -12,7 +12,10 @@ import org.springframework.stereotype.Repository;
 public interface IQuestionRepository extends JpaRepository<Question, Long> {
 
   // jpa hien thi toan bo question
-  @Query(value = "select * from question ", nativeQuery = true)
+  @Query(value = "select question.id ,question.content,question.image_url,question.create_at, comment_question.id , comment_question.content , comment_question.image , comment_question.create_at"
+      + " from question"
+      + " left join comment_question"
+      + " on question.id=comment_question.question_id", nativeQuery = true)
   List<Question> findAll();
 
   // jpa search question theo id

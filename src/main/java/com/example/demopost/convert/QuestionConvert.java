@@ -1,5 +1,6 @@
 package com.example.demopost.convert;
 
+import com.example.demopost.data.enity.CommentQuestion;
 import com.example.demopost.data.enity.Question;
 import com.example.demopost.data.response.QuestionResponse;
 import org.modelmapper.ModelMapper;

@@ -2,13 +2,17 @@ package com.example.demopost.service.post;
 
 import com.example.demopost.convert.PosTopicConvert;
 import com.example.demopost.convert.PostShareConvert;
+import com.example.demopost.data.enity.CommentTopic;
 import com.example.demopost.data.enity.LikePostTopic;
 import com.example.demopost.data.enity.PostTopic;
 import com.example.demopost.data.request.PostRequest;
+import com.example.demopost.data.response.CommentTopicResponse;
 import com.example.demopost.data.response.PostResponse;
 import com.example.demopost.data.response.PostShareResponse;
 import com.example.demopost.exception.InternalServerException;
 import com.example.demopost.exception.NotFoundException;
+import com.example.demopost.mapper.ICommentTopic;
+import com.example.demopost.repository.ICommentTopicRepository;
 import com.example.demopost.repository.ILikeRepository;
 import com.example.demopost.repository.IPostRepository;
 import java.time.LocalDateTime;
@@ -31,13 +35,20 @@ public class PostServiceImpl implements IPostService {
 
   private final PostShareConvert postShareConvert;
 
+  private final ICommentTopicRepository commentTopicRepository;
+
+  private final ICommentTopic iCommentTopic;
+
   @Autowired
   public PostServiceImpl(IPostRepository iPostRepository, ILikeRepository iLikeRepository,
-      PosTopicConvert userConvert, PostShareConvert postShareConvert) {
+      PosTopicConvert userConvert, PostShareConvert postShareConvert,
+      ICommentTopicRepository commentTopicRepository, ICommentTopic iCommentTopic) {
     this.iPostRepository = iPostRepository;
     this.iLikeRepository = iLikeRepository;
     this.userConvert = userConvert;
     this.postShareConvert = postShareConvert;
+    this.commentTopicRepository = commentTopicRepository;
+    this.iCommentTopic = iCommentTopic;
   }
 
   @Override
@@ -90,8 +101,17 @@ public class PostServiceImpl implements IPostService {
   @Override
   public Optional<PostResponse> searchById(Long id) {
     Optional<PostTopic> postTopic = iPostRepository.findById(id);
+    List<CommentTopic> commentTopic = commentTopicRepository.finCommentTopicByPostId(id);
+    List<CommentTopicResponse> commentTopicResponses1 = iCommentTopic.convertEntityCommentTopic(
+        commentTopic);
     if (postTopic.isPresent()) {
-      return Optional.of(userConvert.convertEntityToDo(postTopic.get()));
+      PostResponse postResponse = userConvert.convertEntityToDo(postTopic.get());
+      // add commentTopic vs numberComment
+      postResponse.setCommentTopicResponses(commentTopicResponses1);
+      postResponse.setNumberComment(commentTopic.size());
+
+      return Optional.of(postResponse);
+
     } else {
       throw new NotFoundException("no search id");
     }
@@ -135,9 +155,10 @@ public class PostServiceImpl implements IPostService {
   }
 
   @Override
-  public PostShareResponse increaseShare(Long id, LikePostTopic like, PostRequest postRequest ) {
+  public PostShareResponse increaseShare(Long id, LikePostTopic like, PostRequest postRequest) {
 
-    Optional<LikePostTopic> optionalShare = iLikeRepository.findById(id); // tim id bai post_id trong like
+    Optional<LikePostTopic> optionalShare = iLikeRepository.findById(
+        id); // tim id bai post_id trong like
     if (optionalShare.isPresent()) {
       LikePostTopic share = optionalShare.get(); // lay share
       // tim bai viet goc
@@ -152,7 +173,6 @@ public class PostServiceImpl implements IPostService {
       response.setContent(sharePostTopic.getContent());
       response.setImageUrl(sharePostTopic.getImageUrl());
       response.setLike(sharePostTopic.getLikes().get(0).getLike());
-      response.setShare(sharePostTopic.getLikes().get(0).getShare());
 
       // long vao object goc vao object chia se
       PostTopic topic = new PostTopic();
@@ -162,7 +182,7 @@ public class PostServiceImpl implements IPostService {
       topic.setDateTime(LocalDateTime.now());
       // tang share bai viet goc
       share.setDateShare(LocalDateTime.now());
-      share.setShare(share.getShare()+1);
+      share.setShare(share.getShare() + 1);
 
       LikePostTopic like1 = new LikePostTopic();
       like1.setLike(0);

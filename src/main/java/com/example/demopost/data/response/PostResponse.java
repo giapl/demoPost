@@ -3,6 +3,7 @@ package com.example.demopost.data.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.Data;
 
 @Data
@@ -15,5 +16,6 @@ public class PostResponse {
   private String content;
   private String imageUrl;
   private long like;
-  private long share;
+  private long numberComment;
+  private List<CommentTopicResponse> commentTopicResponses;
 }
