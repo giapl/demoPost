@@ -23,7 +23,7 @@ public interface IPostService {
 
   void updateById(Long id, PostRequest postRequest); // method update postTopic theo id
 
-  void increaseLikes(Long id , LikePostTopic like); // method tang like bai post
+  void increaseLikes(Long id, LikePostTopic like); // method tang like bai post
 
-  PostShareResponse increaseShare(Long id , LikePostTopic like, PostRequest postRequest); // method tang share cho bai post
 }
+

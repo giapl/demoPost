@@ -1,14 +1,12 @@
 package com.example.demopost.service.post;
 
 import com.example.demopost.convert.PosTopicConvert;
-import com.example.demopost.convert.PostShareConvert;
 import com.example.demopost.data.enity.CommentTopic;
 import com.example.demopost.data.enity.LikePostTopic;
 import com.example.demopost.data.enity.PostTopic;
 import com.example.demopost.data.request.PostRequest;
 import com.example.demopost.data.response.CommentTopicResponse;
 import com.example.demopost.data.response.PostResponse;
-import com.example.demopost.data.response.PostShareResponse;
 import com.example.demopost.exception.InternalServerException;
 import com.example.demopost.exception.NotFoundException;
 import com.example.demopost.mapper.ICommentTopic;
@@ -33,20 +31,17 @@ public class PostServiceImpl implements IPostService {
 
   private final PosTopicConvert userConvert;
 
-  private final PostShareConvert postShareConvert;
-
   private final ICommentTopicRepository commentTopicRepository;
 
   private final ICommentTopic iCommentTopic;
 
   @Autowired
   public PostServiceImpl(IPostRepository iPostRepository, ILikeRepository iLikeRepository,
-      PosTopicConvert userConvert, PostShareConvert postShareConvert,
-      ICommentTopicRepository commentTopicRepository, ICommentTopic iCommentTopic) {
+      PosTopicConvert userConvert, ICommentTopicRepository commentTopicRepository,
+      ICommentTopic iCommentTopic) {
     this.iPostRepository = iPostRepository;
     this.iLikeRepository = iLikeRepository;
     this.userConvert = userConvert;
-    this.postShareConvert = postShareConvert;
     this.commentTopicRepository = commentTopicRepository;
     this.iCommentTopic = iCommentTopic;
   }
@@ -66,13 +61,6 @@ public class PostServiceImpl implements IPostService {
     List<LikePostTopic> like = new ArrayList<>();
     like.add(like1);
     topic.setLikes(like);
-    // share tuong ung
-    LikePostTopic share1 = new LikePostTopic();
-    share1.setShare(0);
-    share1.setPostTopic(topic);
-    List<LikePostTopic> share = new ArrayList<>();
-    share.add(share1);
-    topic.setLikes(share);
     try {
       return iPostRepository.save(topic);
     } catch (DataAccessException e) {
@@ -151,56 +139,6 @@ public class PostServiceImpl implements IPostService {
       iLikeRepository.save(like1);
     } else {
       throw new NotFoundException("no post_id");
-    }
-  }
-
-  @Override
-  public PostShareResponse increaseShare(Long id, LikePostTopic like, PostRequest postRequest) {
-
-    Optional<LikePostTopic> optionalShare = iLikeRepository.findById(
-        id); // tim id bai post_id trong like
-    if (optionalShare.isPresent()) {
-      LikePostTopic share = optionalShare.get(); // lay share
-      // tim bai viet goc
-      Optional<PostTopic> optionalPostTopicShare = iPostRepository.findById(id);
-      PostTopic sharePostTopic = optionalPostTopicShare.get();
-
-      // lay bai viet goc ra tu postResponse
-      PostResponse response = new PostResponse();
-      response.setId(sharePostTopic.getId());
-      response.setDateTime(sharePostTopic.getDateTime());
-      response.setTitle(sharePostTopic.getTitle());
-      response.setContent(sharePostTopic.getContent());
-      response.setImageUrl(sharePostTopic.getImageUrl());
-      response.setLike(sharePostTopic.getLikes().get(0).getLike());
-
-      // long vao object goc vao object chia se
-      PostTopic topic = new PostTopic();
-      topic.setTitle(postRequest.getTitle());
-      topic.setContent(String.valueOf(response));
-      topic.setImageUrl(postRequest.getImageUrl());
-      topic.setDateTime(LocalDateTime.now());
-      // tang share bai viet goc
-      share.setDateShare(LocalDateTime.now());
-      share.setShare(share.getShare() + 1);
-
-      LikePostTopic like1 = new LikePostTopic();
-      like1.setLike(0);
-      like1.setPostTopic(topic);
-      LikePostTopic share1 = new LikePostTopic();
-      share1.setShare(0);
-      share1.setPostTopic(topic);
-
-      List<LikePostTopic> likeList = new ArrayList<>();
-      likeList.add(like1);
-      likeList.add(share1);
-      topic.setLikes(likeList);
-      //
-      iPostRepository.save(topic);
-
-      return postShareConvert.shareResponse(topic);
-    } else {
-      throw new NotFoundException("no id topic");
     }
   }
 

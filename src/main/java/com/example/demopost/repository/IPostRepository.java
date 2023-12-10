@@ -29,7 +29,7 @@ public interface IPostRepository extends JpaRepository<PostTopic, Long> {
 
   // jpa lay bai viet theo so like
   @Query(value =
-      "select topic.id , topic.create_at , topic.title , topic.content , topic.image , topic.update_at, like_post.like_count , like_post.share "
+      "select topic.id , topic.create_at , topic.title , topic.content , topic.image , topic.update_at, like_post.like_count "
           + "from topic "
           + "left join like_post "
           + "on topic.id = like_post.post_id "

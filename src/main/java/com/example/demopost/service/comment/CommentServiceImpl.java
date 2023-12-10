@@ -1,16 +1,20 @@
 package com.example.demopost.service.comment;
 
 import com.example.demopost.data.enity.CommentQuestion;
+import com.example.demopost.data.enity.CommentQuestionLeverTwo;
 import com.example.demopost.data.enity.CommentTopic;
 import com.example.demopost.data.enity.PostTopic;
 import com.example.demopost.data.enity.Question;
+import com.example.demopost.data.request.CommentLeverTwoRequest;
 import com.example.demopost.data.request.CommentQuestionRequest;
 import com.example.demopost.data.request.CommentTopicRequest;
+import com.example.demopost.data.response.CommentLeverTwoResponse;
 import com.example.demopost.data.response.CommentQuestionResponse;
 import com.example.demopost.data.response.CommentTopicResponse;
 import com.example.demopost.exception.NotFoundException;
 import com.example.demopost.mapper.IComment;
 import com.example.demopost.mapper.ICommentTopic;
+import com.example.demopost.repository.ICommentQuestionLeverTwoRepository;
 import com.example.demopost.repository.ICommentQuestionRepository;
 import com.example.demopost.repository.ICommentTopicRepository;
 import com.example.demopost.repository.IPostRepository;
@@ -38,17 +42,21 @@ public class CommentServiceImpl implements ICommentService {
 
   private final IPostRepository postRepository;
 
+  private final ICommentQuestionLeverTwoRepository leverTwoRepository;
+
   @Autowired
   public CommentServiceImpl(IQuestionRepository questionRepository,
       ICommentQuestionRepository commentQuestionRepository,
       IComment comment, ICommentTopic commentTopic,
-      ICommentTopicRepository commentTopicRepository, IPostRepository postRepository) {
+      ICommentTopicRepository commentTopicRepository, IPostRepository postRepository,
+      ICommentQuestionLeverTwoRepository leverTwoRepository) {
     this.questionRepository = questionRepository;
     this.commentQuestionRepository = commentQuestionRepository;
     this.comment = comment;
     this.commentTopic = commentTopic;
     this.commentTopicRepository = commentTopicRepository;
     this.postRepository = postRepository;
+    this.leverTwoRepository = leverTwoRepository;
   }
 
   @Override
@@ -79,9 +87,11 @@ public class CommentServiceImpl implements ICommentService {
   }
 
   @Override
+  @Transactional
   public CommentTopicResponse createCommentTopic(CommentTopicRequest commentTopicRequest) {
-    Optional<PostTopic> optionalPostTopic = postRepository.findById(commentTopicRequest.getPostId());
-    if(!optionalPostTopic.isPresent()) {
+    Optional<PostTopic> optionalPostTopic = postRepository.findById(
+        commentTopicRequest.getPostId());
+    if (!optionalPostTopic.isPresent()) {
       throw new NotFoundException("postTopic not have in system");
     }
     CommentTopic commentTopic1 = commentTopic.convertEntity(commentTopicRequest);
@@ -96,6 +106,33 @@ public class CommentServiceImpl implements ICommentService {
     // luu ve response
     CommentTopicResponse commentTopicResponse = commentTopic.convertTopicResponse(commentTopic2);
     return commentTopicResponse;
+  }
+
+  @Override
+  @Transactional
+  public CommentLeverTwoResponse createCommentLeverTwo(
+      CommentLeverTwoRequest commentLeverTwoRequest) {
+    Optional<CommentQuestion> optionalCommentQuestion = commentQuestionRepository.findByIdAndQuestionId(
+        commentLeverTwoRequest.getQuestionId(), commentLeverTwoRequest.getCommentId()
+    ); // search id_comment and question id trong commentQuestion
+    if (!optionalCommentQuestion.isPresent()) {
+      throw new NotFoundException("Comment not have in system");
+    }
+    CommentQuestionLeverTwo commentQuestion = comment.convertEntityCommentLeverTwo(
+        commentLeverTwoRequest); // map commentRequest sang commentQuestionLeverTwo
+
+    // create comment cho commentQuestion
+    commentQuestion.setQuestionId(optionalCommentQuestion.get().getQuestionId());
+    commentQuestion.setCommentQuestionId(optionalCommentQuestion.get().getId());
+    commentQuestion.setContent(commentLeverTwoRequest.getContent());
+    commentQuestion.setImageUrl(commentLeverTwoRequest.getImageUrl());
+    commentQuestion.setDateTime(LocalDateTime.now());
+    commentQuestion.setUpdateTime(LocalDateTime.now());
+    CommentQuestionLeverTwo commentQuestion1 = leverTwoRepository.save(
+        commentQuestion);  // luu vao database
+    CommentLeverTwoResponse commentLeverTwoResponse = comment.convertEntityCommentQuestion(
+        commentQuestion1); // convert sang response
+    return commentLeverTwoResponse;
   }
 
 }

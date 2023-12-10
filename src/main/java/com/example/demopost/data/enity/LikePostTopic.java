@@ -34,10 +34,6 @@ public class LikePostTopic {
   @Column(name = "date")
   @CreationTimestamp
   private LocalDateTime dateLike;
-  @Column(name = "share")
-  private long share;
-  @Column(name = "date_share")
-  private LocalDateTime dateShare;
 
 
   @JsonBackReference

@@ -33,6 +33,9 @@ public class QuestionServiceImpl implements IQuestionService {
 
   private final IComment iComment;
 
+
+
+
   @Autowired
   public QuestionServiceImpl(IQuestionRepository iQuestionRepository,
       QuestionConvert questionConvert, ILikeQuestionRepository iLikeQuestionRepository,
@@ -62,16 +65,6 @@ public class QuestionServiceImpl implements IQuestionService {
     List<LikeQuestion> like = new ArrayList<>();
     like.add(likeQuestion);
     question1.setLikeQuestions(like);
-    /*
-       // comment tuong ung
-    CommentQuestion commentQuestion = new CommentQuestion();
-    commentQuestion.setComment(0);
-    commentQuestion.setQuestion(question1);
-
-    List<CommentQuestion> comment = new ArrayList<>();
-    comment.add(commentQuestion);
-    question1.setCommentQuestions(comment);
-    */
     return iQuestionRepository.save(question1);
   }
 
