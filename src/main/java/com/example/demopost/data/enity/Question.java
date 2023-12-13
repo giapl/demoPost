@@ -44,4 +44,7 @@ public class Question {
   @OneToMany(mappedBy = "questions", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<LikeQuestion> likeQuestions = new ArrayList<>();
 
+  @JsonManagedReference
+  @OneToMany(mappedBy = "question", cascade = CascadeType.ALL,orphanRemoval = true)
+  private List<CommentQuestion> commentQuestions;
 }
