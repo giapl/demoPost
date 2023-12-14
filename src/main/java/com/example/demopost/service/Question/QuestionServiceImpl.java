@@ -34,8 +34,6 @@ public class QuestionServiceImpl implements IQuestionService {
   private final IComment iComment;
 
 
-
-
   @Autowired
   public QuestionServiceImpl(IQuestionRepository iQuestionRepository,
       QuestionConvert questionConvert, ILikeQuestionRepository iLikeQuestionRepository,
@@ -112,8 +110,12 @@ public class QuestionServiceImpl implements IQuestionService {
     Optional<Question> questionOptional = iQuestionRepository.findById(id);
     if (questionOptional.isPresent()) {
       Question question = questionOptional.get();
-      question.setContent(questionRequest.getContent());
-      question.setImageUrl(questionRequest.getImageUrl());
+      if (questionRequest.getContent() != null) {
+        question.setContent(questionRequest.getContent());
+      }
+      if (questionRequest.getImageUrl() != null) {
+        question.setImageUrl(questionRequest.getImageUrl());
+      }
       question.setUpdateTime(LocalDateTime.now());
       iQuestionRepository.save(question);
     } else {

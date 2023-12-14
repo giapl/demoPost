@@ -119,9 +119,15 @@ public class PostServiceImpl implements IPostService {
     Optional<PostTopic> topicOptional = iPostRepository.findById(id);
     if (topicOptional.isPresent()) {
       PostTopic postTopic = topicOptional.get();
-      postTopic.setTitle(postRequest.getTitle());
-      postTopic.setContent(postRequest.getContent());
-      postTopic.setImageUrl(postRequest.getImageUrl());
+      if (postRequest.getTitle() != null) {
+        postTopic.setTitle(postRequest.getTitle());
+      }
+      if (postRequest.getContent() != null) {
+        postTopic.setContent(postRequest.getContent());
+      }
+      if (postRequest.getImageUrl() != null) {
+        postTopic.setImageUrl(postRequest.getImageUrl());
+      }
       postTopic.setUpdateTime(LocalDateTime.now());
       iPostRepository.save(postTopic);
     } else {
