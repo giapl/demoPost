@@ -22,4 +22,4 @@ services:
     network_mode: host
 
 volumes:
-  database_mysql :
+  database_mysql:
