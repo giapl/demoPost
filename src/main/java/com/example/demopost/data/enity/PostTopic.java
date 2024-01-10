@@ -12,6 +12,7 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,4 +46,6 @@ public class PostTopic {
   @JsonManagedReference
   @OneToMany(mappedBy = "postTopic", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<LikePostTopic> likes = new ArrayList<>();
+
+
 }

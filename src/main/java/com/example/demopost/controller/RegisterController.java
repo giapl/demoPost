@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/registers")
-public class RegisterAndLoginController {
+@RequestMapping("/api/v1/auth")
+public class RegisterController {
 
   private final IUserRegisterService userRegisterService;
 
 
   @Autowired
-  public RegisterAndLoginController(IUserRegisterService userRegisterService) {
+  public RegisterController(IUserRegisterService userRegisterService) {
     this.userRegisterService = userRegisterService;
   }
 

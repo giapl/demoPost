@@ -16,10 +16,15 @@ public interface IComment {
 
   List<CommentQuestionResponse> convertEntityCommentMapper(List<CommentQuestion> commentQuestion);
 
-  CommentQuestionLeverTwo convertEntityCommentLeverTwo(CommentLeverTwoRequest commentLeverTwoRequest);
+  CommentQuestionResponse convertComment(CommentQuestion commentQuestion);
 
-  CommentLeverTwoResponse convertEntityCommentQuestion(CommentQuestionLeverTwo commentQuestionLeverTwo);
+  CommentQuestionLeverTwo convertEntityCommentLeverTwo(
+      CommentLeverTwoRequest commentLeverTwoRequest);
 
-  List<CommentLeverTwoResponse> convertEntityCommentQuestionLeverTwo(List<CommentQuestionLeverTwo> commentQuestionLeverTwos);
+  CommentLeverTwoResponse convertEntityCommentQuestion(
+      CommentQuestionLeverTwo commentQuestionLeverTwo);
+
+  List<CommentLeverTwoResponse> convertEntityCommentQuestionLeverTwo(
+      List<CommentQuestionLeverTwo> commentQuestionLeverTwos);
 
 }

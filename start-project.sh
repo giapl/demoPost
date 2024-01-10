@@ -1,11 +1,12 @@
 # build file jar
 echo "build project"
 mvn clean install
-echo "build image"
 # docker build images
+echo "build image"
 docker build -f Dockerfile -t app_noron .
+# down project
+echo "down project"
+docker-compose -f Docker-compose.yml down
 # start project
-echo "down container BE_app"
-docker-compose -f Docker-compose.yml BE_app
 echo "start project"
 docker-compose -f Docker-compose.yml up -d
