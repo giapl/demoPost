@@ -70,12 +70,20 @@ public class CommentServiceImpl implements ICommentService {
     }
     // b1: tạo ra 1 mapper : map commentQuestionRequest to comment entity
     CommentQuestion commentQuestion = comment.convertEntityComment(commentQuestionRequest);
+    /* comment by ducdv
+ * Sao ở trên dùng mapper rồi mà vấn cần set ở dưới
+ * nên xử lý hết trong mapper
+ */
     commentQuestion.setQuestionId(questionById.get().getId());
     commentQuestion.setContent(commentQuestionRequest.getContent());
     commentQuestion.setImageUrl(commentQuestionRequest.getImageUrl());
     commentQuestion.setDateTime(LocalDateTime.now());
     commentQuestion.setUpdateTime(LocalDateTime.now());
     // b2: save  CommentQuestion commentSaved = commentQuestionRepository.save();
+
+    /* comment by ducdv
+ * xem lại cách đặt tên biến, ko nên dùng số sau mỗi biến. nên đặt tên biến có ý nghĩa
+ */
     CommentQuestion commentQuestion1 = commentQuestionRepository.save(commentQuestion);
     // create commentResponse
     CommentQuestionResponse response = comment.convertComment(commentQuestion1);

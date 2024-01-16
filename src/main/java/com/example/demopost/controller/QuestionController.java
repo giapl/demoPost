@@ -26,7 +26,9 @@ public class QuestionController {
   public QuestionController(IQuestionService iQuestionService) {
     this.iQuestionService = iQuestionService;
   }
-
+/* comment by ducdv
+ * ở trên có questions rồi thì chỗ này nên bỏ /question hoặc thay bằng /save or /create
+ */
   @PostMapping("/question")
   public ResponseEntity<?> createQuestion(@RequestBody QuestionRequest question) {
     iQuestionService.createQuestion(question);

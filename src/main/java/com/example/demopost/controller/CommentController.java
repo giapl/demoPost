@@ -26,6 +26,9 @@ public class CommentController {
   public ResponseEntity<?> createComment(
       @RequestBody CommentQuestionRequest commentQuestionRequest) {
     commentService.createComment(commentQuestionRequest);
+    /* comment by ducdv
+ * đổi về return ResponseEntity.ok ...
+ */
     return ResponseEntity.status(HttpStatus.CREATED).body("successful created new a comment");
   }
   @PostMapping("/createTopic")

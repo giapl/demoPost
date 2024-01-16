@@ -8,7 +8,9 @@ import com.example.demopost.data.response.CommentLeverTwoResponse;
 import com.example.demopost.data.response.CommentQuestionResponse;
 import java.util.List;
 import org.mapstruct.Mapper;
-
+/* comment by ducdv
+ * đặt tên cho mapper nên có mapper ở sau để dễ phân biệt./
+ */
 @Mapper(componentModel = "spring")
 public interface IComment {
 

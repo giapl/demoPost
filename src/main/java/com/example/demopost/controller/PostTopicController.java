@@ -26,7 +26,9 @@ public class PostTopicController {
   public PostTopicController(IPostService iPostService) {
     this.iPostService = iPostService;
   }
-
+/* comment by ducdv
+ * tương tự bên question
+ */
   @PostMapping("/topic")
   public ResponseEntity<?> createTopic(@RequestBody PostRequest post) {
     iPostService.createTopic(post);
