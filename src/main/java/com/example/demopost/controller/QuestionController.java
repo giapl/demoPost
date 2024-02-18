@@ -29,7 +29,7 @@ public class QuestionController {
 /* comment by ducdv
  * ở trên có questions rồi thì chỗ này nên bỏ /question hoặc thay bằng /save or /create
  */
-  @PostMapping("/question")
+  @PostMapping("/create")
   public ResponseEntity<?> createQuestion(@RequestBody QuestionRequest question) {
     iQuestionService.createQuestion(question);
     return ResponseEntity.status(HttpStatus.CREATED).body("successful created new a question");

@@ -29,10 +29,10 @@ public class PostTopicController {
 /* comment by ducdv
  * tương tự bên question
  */
-  @PostMapping("/topic")
+  @PostMapping("/create")
   public ResponseEntity<?> createTopic(@RequestBody PostRequest post) {
     iPostService.createTopic(post);
-    return ResponseEntity.status(HttpStatus.CREATED).body("successful created new a topic");
+    return ResponseEntity.ok("successful created new a topic");
   }
 
   @GetMapping("/all")
